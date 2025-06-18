@@ -54,4 +54,53 @@ class Solution {
         }
         return list;
     }
+
+        public List<List<Integer>> threeSum2(int[] nums) {
+        // 数组排序 才能用相向指针
+        Arrays.sort(nums);
+
+        List<List<Integer>> list = new ArrayList<>();
+
+        int len = nums.length; // 数组长度
+        // 留下2个位置给j,k，x循环n-2次
+
+        // 数组有序
+        for (int i = 0; i < len - 2; i++) {
+            // 如果和上一轮一样 直接跳过
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            // 两数之和的left right
+            int j = i + 1;
+            int k = len - 1;
+            // optional 优化1：首三个都大于0 直接pass
+            // if(nums[i]+nums[i+1]+nums[i+2]>0)
+            //     break;
+            // optional 优化2
+            // if(nums[i]+nums[len-2]+nums[len-1]<0)
+            //     continue;
+            while (j < k) {
+                int res = nums[i] + nums[j] + nums[k];
+                if (res > 0) {
+                    k--;
+                } else if (res < 0) {
+                    j++;
+                } else {
+                    // 如果找到一组 就往中间缩减left right
+                    list.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j++;
+                    // 重复的去掉
+                    while (j < k && nums[j] == nums[j - 1])
+                        j++;
+                    k--;
+                    // 重复的去掉
+                    while (j < k && nums[k] == nums[k + 1])
+                        k--;
+                }
+            }
+
+        }
+        return list;
+
+    }
+
 }

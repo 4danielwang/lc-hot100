@@ -18,4 +18,5 @@ class Solution {
         }
         throw new IllegalArgumentException("no solution");
     }
+
 }
