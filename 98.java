@@ -87,5 +87,44 @@ class Solution {
             midVisit(root.right);
         }
     }
+
+    // 方法2: 边访问边记录值
+    /**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    // 记录中序遍历过程当前访问节点值
+    // 由于-2^31 <= Node.val <= 2^31 - 1
+    // 考虑边界条件 root值取到-2^31就判断不是递增了 需要用更大的初始值
+    private long pre = Long.MIN_VALUE;
+
+    public boolean isValidBST(TreeNode root) {
+        if(root==null) return true;
+        if(!isValidBST(root.left)){ // 左
+            return false;
+        }
+        // 中
+        if(pre >= root.val){
+            return false;
+        }
+        pre = root.val;
+        // 右
+        return isValidBST(root.right);
+    }
+
+  
+}
   
 }
