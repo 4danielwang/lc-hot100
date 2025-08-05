@@ -24,3 +24,24 @@ class Solution {
         return count;
     }
 }
+// 第二次
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int ans=0;
+        int s=0; // 当前的前缀和
+
+        
+        Map<Integer,Integer> valueToCount = new HashMap<>();
+        // 原本是处理s[] 现在边计算边处理 没有s[0] 需要添加一个映射项
+        valueToCount.put(0,1);
+        for(int num : nums){
+            s+=num;
+
+            // 找到是否存在s[j]-k
+            ans+=valueToCount.getOrDefault(s-k, 0);
+            // 更新s[j]的次数
+            valueToCount.put(s, valueToCount.getOrDefault(s,0)+1);
+        }
+        return ans;
+    }
+}
