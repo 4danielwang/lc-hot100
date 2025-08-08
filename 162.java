@@ -1,18 +1,25 @@
 class Solution {
-
     public int findPeakElement(int[] nums) {
+        // [left... peek ... right]        
+        // 二分查找 查找结束就是结果位置
+        // 局部是上升的 往右找
+        // 局部是下降的 往左找
+        
+        // 二分 左右都是闭区间
         int left=0;
-        // 倒数第二个元素
-        int right=nums.length-2; // 峰值元素一定存在,数组一定有左右元素
+        int right=nums.length-1;
 
-        // 退出条件left=right+1
-        while(left <= right){
-            int mid = left + (right -left )/2;
-            if(nums[mid] < nums[mid+1])// 上坡 峰值在mid右边
+        // 结束条件是left=right
+        while(left<right){
+            int mid = left + (right-left)/2;
+            // mid是局部最大值 right包含了可能的最大值
+            if(nums[mid] > nums[mid+1]){
+                right=mid; 
+            }else{
                 left=mid+1;
-            else // 下坡 峰值在mid左边
-                right=mid-1;
+            }
         }
+        // 最后区间只剩一个值 返回谁都行
         return left;
     }
 }
