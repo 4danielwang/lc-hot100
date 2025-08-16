@@ -45,3 +45,28 @@ class Solution {
         return ans;
     }
 }
+// 参考leetcode 303关于前缀和的定义
+// 前缀和数组长度为n+1 s[0]=0
+class Solution {
+    // 遍历nums过程中 计算前缀和pre 计算中找到pre-k之前出现的次数 累加
+    // prefix[j]-prefix[i] = k 找到符合条件的i,i<j && prefix[i] = prefix[j]-k
+    public int subarraySum(int[] nums, int k) {
+        int ans=0;
+        int pre=0; // 前缀和
+
+        Map<Integer,Integer> preToCount = new HashMap<>();
+        // 根据定义 prefix[0]=0 一定有一个为0的前缀和
+        // 注意不要遗漏
+        preToCount.put(0,1);
+
+        for(int num : nums){
+            pre += num; // 前缀和计算
+            if(preToCount.containsKey(pre-k)){
+                ans += preToCount.get(pre-k);
+            }
+            preToCount.put(pre, preToCount.getOrDefault(pre, 0) + 1);
+        }
+
+        return ans;
+    }
+}
