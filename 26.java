@@ -1,17 +1,16 @@
 class Solution {
     public int removeDuplicates(int[] nums) {
-        // hash记录元素值与位置的关系
-        Map<Integer, Integer> map = new HashMap<>();
-
-        int j=0; // 记录当前位置
-        for(int i=0;i<nums.length;i++){
-            if(!map.containsKey(nums[i])){
-                map.put(nums[i], i);
-                nums[j++] = nums[i];
+        int n = nums.length;
+        // 最后返回slow+1，默认slow指向0，但是实际上长度是1
+        int slow = 0; // 慢指针
+        // 快指针不断的往前走
+        for(int fast=0;fast<n;fast++){
+            if(nums[slow] != nums[fast]){
+                // 只有当快慢指针不相等 慢指针前进 把快指针的值赋值
+                nums[++slow] = nums[fast];
             }
         }
-
-        return j;
-        
+        return slow+1;
     }
 }
+78
