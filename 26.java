@@ -13,4 +13,3 @@ class Solution {
         return slow+1;
     }
 }
-78
