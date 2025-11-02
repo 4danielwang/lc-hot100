@@ -8,8 +8,7 @@ class Solution {
         // 利润=prices[i]-minPrice
         // 求最大利润
         for(int i=0;i<prices.length;i++){
-            ans = Math.max(ans, prices[i]-minPrice);
-            // i之前的更新最小价格
+            ans = Math.max(ans, prices[i]-minPrice); // 求最大的price-minPrice差值
             minPrice = Math.min(minPrice, prices[i]);
         }
 
