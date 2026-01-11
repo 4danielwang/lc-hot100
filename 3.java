@@ -1,27 +1,24 @@
 class Solution {
-    public int minSubArrayLen(int target, int[] nums) {
-        int n = nums.length;
-        // ans为满足sum >= target的窗口 不断更新找到最小值
-        // 初始化比数组长度大 代表没有符合条件的子数组
-        int ans=n+1; 
-        // 滑动窗口左右端点
+    // 滑动窗口
+    // 时间O(n) 空间O(p) p是字符集大小
+    public int lengthOfLongestSubstring(String s) {
+        int ans=0;
         int left=0;
-        int right=0;
-        int sum=0;
+        int n = s.length();
+        char ar[] = s.toCharArray();
+        int cnt[] = new int[128]; // 当作hash表 统计当前窗口中的字符数量
+        // 不断扩大右窗口
+        for(int right=0;right<n;right++){
+            char c = ar[right];
+            cnt[c]++;
 
-        // 窗口扩大
-        while(right<n){
-            sum+=nums[right];
-            // 窗口缩小
-            while(sum >= target){
-                ans = Math.min(ans, right-left+1);
-                sum -= nums[left];
+            // 如果窗口中有重复字符 缩小左窗口
+            while(cnt[c] > 1){
+                cnt[ar[left]]--;
                 left++;
             }
-            right++;
+            ans = Math.max(ans, right-left+1);
         }
-
-        // 说明没找到符合条件的子数组
-        return ans<=n ? ans : 0;
+        return ans;
     }
 }
