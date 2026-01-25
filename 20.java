@@ -1,32 +1,28 @@
-import java.util.*;
-
 class Solution {
+    // 时间O(n) 空间O(n)
     public boolean isValid(String s) {
-        // 长度为奇数
-        if(s.length() % 2 == 1) return false;
-        Deque<Character> stack = new LinkedList<>();
-        Map<Character, Character> map = new HashMap<>(){
-            {
-                put(')', '(');
-                put('}', '{');
-                put(']', '[');
-            }
-        };
-        // 右括号出栈对比
-        char[] ar = s.toCharArray();
-        for(int i=0;i<ar.length;i++){
-            // 右括号 出栈对比
-            if(map.containsKey(ar[i])){
-                if(stack.isEmpty() || stack.peek() != map.get(ar[i]))
-                    return false;
-                stack.pop();
-
-            }else{
-                stack.push(ar[i]);
-            }
+        int n = s.length();
+        if (n % 2 == 1) {
+            return false;
         }
 
-        // 如果栈为空 成功
+        Map<Character, Character> pairs = new HashMap<Character, Character>() {{
+            put(')', '(');
+            put(']', '[');
+            put('}', '{');
+        }};
+        Deque<Character> stack = new LinkedList<Character>();
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (pairs.containsKey(ch)) {
+                if (stack.isEmpty() || stack.peek() != pairs.get(ch)) {
+                    return false;
+                }
+                stack.pop();
+            } else {
+                stack.push(ch);
+            }
+        }
         return stack.isEmpty();
     }
 }

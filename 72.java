@@ -1,28 +1,37 @@
-import java.util.*;
-
 class Solution {
+    // 时间O(mn) 空间O(mn)
     public int minDistance(String word1, String word2) {
-        // i j从末尾开始
-        int m = word1.length() - 1;
-        int n = word2.length() - 1;
-        return dfs(m, n, word1.toCharArray(),word2.toCharArray());
-    }
+        int n = word1.length();
+        int m = word2.length();
 
-    private int dfs(int i, int j, char[] ar1, char[] ar2){
-        // 字符串只有1个 返回
-        if(i<0)
-            return j+1;
-        if(j<0)
-            return i+1;
+        // 有一个字符串为空串
+        if (n * m == 0) {
+            return n + m;
+        }
 
-        // 递归三种情况
-        // 1，ar1[i] == ar2[j] i和j都去掉
-        if(ar1[i] == ar2[j])
-            return dfs(i-1, j-1, ar1, ar2);
-        
-        // 2，删除 插入到ar1[i] 使得ar1[i]==ar2[j] 等价于删除了ar2[j] 
-        // 3，插入 插入到ar2[j] 使得ar1[i]==ar2[j] 
-        // 4. 替换
-        return Math.min(dfs(i-1, j-1, ar1, ar2), Math.min(dfs(i, j-1, ar1, ar2), dfs(i-1, j, ar1, ar2))) + 1;
+        // DP 数组
+        int[][] D = new int[n + 1][m + 1];
+
+        // 边界状态初始化
+        for (int i = 0; i < n + 1; i++) {
+            D[i][0] = i;
+        }
+        for (int j = 0; j < m + 1; j++) {
+            D[0][j] = j;
+        }
+
+        // 计算所有 DP 值
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < m + 1; j++) {
+                int left = D[i - 1][j] + 1;
+                int down = D[i][j - 1] + 1;
+                int left_down = D[i - 1][j - 1];
+                if (word1.charAt(i - 1) != word2.charAt(j - 1)) {
+                    left_down += 1;
+                }
+                D[i][j] = Math.min(left, Math.min(down, left_down));
+            }
+        }
+        return D[n][m];
     }
 }

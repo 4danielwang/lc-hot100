@@ -1,42 +1,23 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    // 时间O(n+m) 空间O(1)
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode prehead = new ListNode(-1);
 
-        ListNode dummy = new ListNode(0, null);
-        ListNode last=dummy;
-        // list2和list2都还有 互相比较
-        while(list1!=null && list2!=null){
-            if(list1.val<=list2.val){
-                last.next=list1;
-                list1 = list1.next;
-            }else{
-                last.next=list2;
-                list2 = list2.next;
+        ListNode prev = prehead;
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                prev.next = l1;
+                l1 = l1.next;
+            } else {
+                prev.next = l2;
+                l2 = l2.next;
             }
-            // 更新尾节点
-            last = last.next;
+            prev = prev.next;
         }
-        // list1的所有节点拼在last后面
-        while(list1!=null){
-            last.next=list1;
-            list1=list1.next;
-            last=last.next;
-        }
-        // list2的所有节点拼在last后面
-        while(list2!=null){
-            last.next=list2;
-            list2=list2.next;
-            last=last.next;
-        }
-        return dummy.next;
+
+        // 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+        prev.next = l1 == null ? l2 : l1;
+
+        return prehead.next;
     }
 }

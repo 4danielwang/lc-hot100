@@ -1,40 +1,51 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
+    // 时间O(n) 空间O(1)
     public void reorderList(ListNode head) {
-        // 把节点保存在数组中，随机查找
-        List<ListNode> list = new ArrayList<>();
-        
-        ListNode t = head;
-        while(t!=null){
-            list.add(t);
-            t = t.next;
+        if (head == null) {
+            return;
         }
+        ListNode mid = middleNode(head);
+        ListNode l1 = head;
+        ListNode l2 = mid.next;
+        mid.next = null;
+        l2 = reverseList(l2);
+        mergeList(l1, l2);
+    }
 
-        // 左右指针
-        int left=0,right=list.size()-1;
-
-        while(left<right){
-            list.get(left).next = list.get(right);
-            left++;
-
-            // 中间再判断一次 不然就漏了
-            if(left == right) break;
-
-            list.get(right).next = list.get(left);
-            right--;
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
-        list.get(left).next=null;
+        return slow;
+    }
 
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
+        }
+        return prev;
+    }
+
+    public void mergeList(ListNode l1, ListNode l2) {
+        ListNode l1_tmp;
+        ListNode l2_tmp;
+        while (l1 != null && l2 != null) {
+            l1_tmp = l1.next;
+            l2_tmp = l2.next;
+
+            l1.next = l2;
+            l1 = l1_tmp;
+
+            l2.next = l1;
+            l2 = l2_tmp;
+        }
     }
 }
-
-// 也可以用链表法 会一种即可

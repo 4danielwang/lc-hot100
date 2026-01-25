@@ -1,51 +1,19 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
-    
-    // 层序遍历 每一层最后一个节点
-    private List<Integer> ans = new ArrayList<>();
-
+    // 时间O(n) 空间O(h)～O(n) h是树高
     public List<Integer> rightSideView(TreeNode root) {
-
-        if(root==null) return ans;
-
-        List<TreeNode> cur = new ArrayList<>();
-        cur.add(root);
-
-        while(!cur.isEmpty()){
-            // 下一层的节点
-            List<TreeNode> next = new ArrayList<>();
-            // 先进先出
-            for(int i=0;i<cur.size();i++){
-                TreeNode node = cur.get(i); // 当前访问节点
-                if(node.left!=null){
-                    next.add(node.left);
-                }
-                if(node.right != null){
-                    next.add(node.right);
-                }
-                // visit 当前层最后一个节点
-                if(i == cur.size()-1){
-                    ans.add(node.val);
-                }
-            }
-            cur = next;
-
-        }
+        List<Integer> ans = new ArrayList<>();
+        dfs(root, 0, ans);
         return ans;
     }
 
+    private void dfs(TreeNode root, int depth, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        if (depth == ans.size()) { // 这个深度首次遇到
+            ans.add(root.val);
+        }
+        dfs(root.right, depth + 1, ans); // 先递归右子树，保证首次遇到的一定是最右边的节点
+        dfs(root.left, depth + 1, ans);
+    }
 }

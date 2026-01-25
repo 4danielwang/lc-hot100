@@ -1,21 +1,11 @@
 class Solution {
+    // 转为exp和log函数计算
+    // 时间O(1) 空间O(1)
     public int mySqrt(int x) {
-        
-        // 二分查找 最后的值 平方一定是小于等于x的
-        int l=0;
-        int r=x;
-        int ans=-1;
-        while(l<=r){
-            int mid = l + (r-l)/2;
-            
-            // mid*mid可能会溢出
-            if((long)mid*mid <=x){
-                ans = mid;
-                l = mid+1;
-            }else{
-                r = mid-1;
-            }
+        if (x == 0) {
+            return 0;
         }
-        return ans;
+        int ans = (int) Math.exp(0.5 * Math.log(x));
+        return (long) (ans + 1) * (ans + 1) <= x ? ans + 1 : ans;
     }
 }

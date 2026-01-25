@@ -1,35 +1,33 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
+    // 时间O(Llogm) 空间O(1) m是lists长度，L是所有链表中节点总数
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists == null || lists.length == 0) return null;
-        // 小顶堆
-        Queue<ListNode> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
-        ListNode dummy = new ListNode(0, null);
-        ListNode last = dummy;
-
-        // 每个链表头入堆
-        for(ListNode t: lists){
-            if(t!=null)
-                pq.add(t);
+        int m = lists.length;
+        if (m == 0) {
+            return null;
         }
-
-        while(!pq.isEmpty()){
-            ListNode minNode = pq.remove();
-            if(minNode.next!=null){
-                pq.add(minNode.next);
+        for (int step = 1; step < m; step *= 2) {
+            for (int i = 0; i < m - step; i += step * 2) {
+                lists[i] = mergeTwoLists(lists[i], lists[i + step]);
             }
-            last.next=minNode;
-            last = last.next;
         }
+        return lists[0];
+    }
+
+    // 21. 合并两个有序链表
+    private ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode(); // 用哨兵节点简化代码逻辑
+        ListNode cur = dummy; // cur 指向新链表的末尾
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
+                cur.next = list1; // 把 list1 加到新链表中
+                list1 = list1.next;
+            } else { // 注：相等的情况加哪个节点都是可以的
+                cur.next = list2; // 把 list2 加到新链表中
+                list2 = list2.next;
+            }
+            cur = cur.next;
+        }
+        cur.next = list1 != null ? list1 : list2; // 拼接剩余链表
         return dummy.next;
     }
 }

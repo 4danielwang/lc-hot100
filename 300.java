@@ -1,27 +1,31 @@
 class Solution {
+    // 时间O(nlogn) 空间O(1)
     public int lengthOfLIS(int[] nums) {
-        if(nums == null || nums.length ==0) return 0;
-
-        // LIS：严格递增子序列
-        // lisLen[i]表示以nums[0]~nums[i]区间的子数组中 LIS最大长度
-        // lisLen[i]默认值为1
-        int lisLen[] = new int[nums.length];
-        Arrays.fill(lisLen,1);
-        int ans=1;
-
-        // 外层是数组长度
-        for(int i=0;i<nums.length;i++){
-            for(int j=0;j<i;j++){
-                // 比较两个数的大小
-                // 实际上只有两个数挨在一起并且前面小于后面的时候才会更新
-                if(nums[j] < nums[i]){
-                    lisLen[i] = Math.max(lisLen[i], lisLen[j]+1);
-                }
+        int ng = 0; // g 的长度
+        for (int x : nums) {
+            int j = lowerBound(nums, ng, x);
+            nums[j] = x;
+            if (j == ng) { // >=x 的 g[j] 不存在
+                ng++;
             }
-            ans = Math.max(ans, lisLen[i]);
         }
-        return ans;
+        return ng;
+    }
 
-
+    // 开区间写法
+    private int lowerBound(int[] nums, int right, int target) {
+        int left = -1; // 开区间 (left, right)
+        while (left + 1 < right) { // 区间不为空
+            // 循环不变量：
+            // nums[left] < target
+            // nums[right] >= target
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid; // 范围缩小到 (mid, right)
+            } else {
+                right = mid; // 范围缩小到 (left, mid)
+            }
+        }
+        return right; // 或者 left+1
     }
 }
