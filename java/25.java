@@ -1,13 +1,17 @@
 /**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ * @description: k（k值小于或等于链表的长度）个一组翻转链表，节点数不是k的整数倍，保持原来的顺序
+ * @example: 输入：head = [1,2,3,4,5], k = 2 输出：[2,1,4,3,5]
+ * @example: 输入：head = [1,2,3,4,5], k = 3 输出：[3,2,1,4,5]
  */
+// 节点定义
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
 class Solution {
     // 时间复杂度O(N)，空间复杂度O(1)
     public ListNode reverseKGroup(ListNode head, int k) {
@@ -26,7 +30,7 @@ class Solution {
         // 创建dummy
         ListNode dummy = new ListNode(0, head);
 
-        // p0前一组链表的末节点 用于翻转后链接
+        // p0是每一组reverse的dummy（第一个节点的前一个节点），用于reverse后找到末节点
         ListNode p0=dummy;
         ListNode pre=null;
         ListNode cur=head;
@@ -43,10 +47,10 @@ class Solution {
             }
 
             // 翻转结束后 cur指向下一组的头节点, pre指向翻转后的头节点, p0.next指向翻转后的尾节点
-            ListNode nxt=p0.next; // 获取翻转后的尾节点，下一轮的p0
+            ListNode nxt=p0.next; // 获取reverse后的尾节点，下一轮的p0
             nxt.next=cur; // 连接下一组链表
-            p0.next=pre; // 连接前一组链表
-            p0=nxt; // 更新p0
+            p0.next=pre; // reverse后, pre是头节点，连接reverse后的链表
+            p0=nxt; // 更新p0，作为下一组翻转的dummy
             pre=null; // 重置pre
         }
         return dummy.next;

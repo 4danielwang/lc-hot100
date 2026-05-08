@@ -1,4 +1,8 @@
+/**
+ * @description: 返回所有满足nums[i]+nums[j]+nums[k]==0且i,j,k均不同的三元组，不可重复
+ */
 class Solution {
+    // 时间O(N^2) 空间O(logN)
     public List<List<Integer>> threeSum(int[] nums) {
         // 有序数组可以用双指针
         Arrays.sort(nums);
@@ -12,7 +16,7 @@ class Solution {
             // 不能有重复的三元组 跳过
             if (i > 0 && nums[i] == nums[i - 1])
                 continue;
-            // 两数之和的left right
+            // 在j和k范围解决2sum
             int j = i + 1;
             int k = len - 1;
             // 优化1：nums[i] 与后面最小的两个数相加 >0 跳过
@@ -33,11 +37,11 @@ class Solution {
                     // 如果找到一组 就往中间缩减left right
                     list.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     j++;
-                    // 优化：去掉重复
+                    // 优化：掉连续重复数字
                     while (j < k && nums[j] == nums[j - 1])
                         j++;
                     k--;
-                    // 优化：去掉重复
+                    // 优化：去掉连续重复数字
                     while (j < k && nums[k] == nums[k + 1])
                         k--;
                 }

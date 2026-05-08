@@ -1,3 +1,9 @@
+/**
+ * @description: 给定一个字符串s ，请你找出其中不含有重复字符的最长子串的长度
+ * @example: abcabcbb -> 3
+ * @example: bbbbb -> 1
+ * @example: pwwkew -> 3
+ */
 class Solution {
     // 滑动窗口
     // 时间O(n) 空间O(p) p是字符集大小

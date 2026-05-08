@@ -1,6 +1,8 @@
 import java.util.*;
 
-// get/put O(1) 时间
+/**
+ * @description: 实现一个LRU缓存数据结构，get和put必须以O(1)运行
+ */
 // 空间 O(capacity)
 class LRUCache {
 
@@ -10,7 +12,7 @@ class LRUCache {
     // dummy节点
     private final Node dummy = new Node(0, 0);
 
-    // 值到节点的映射
+    // <key, node>映射，方便根据key获取节点
     // 节点插入和删除要更新映射
     private final Map<Integer, Node> keyToNode = new HashMap<>();
 
@@ -56,8 +58,11 @@ class LRUCache {
 
         // 超过capacity 删除尾节点
         if(keyToNode.size() > capacity){
+            // 找到最后一个节点（LRU驱逐规则）
             Node r = dummy.prev;
+            // 删除映射
             keyToNode.remove(r.key);
+            // 删除节点
             remove(r);
         }
 

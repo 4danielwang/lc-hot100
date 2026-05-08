@@ -1,3 +1,6 @@
+/**
+ * @description: 计算网格中岛屿的数量,网格的四条边视为被水包围
+ */
 class Solution {
     // 时间O(mn) m和n分别grid行数和列数
     // 空间O(min(m,n))

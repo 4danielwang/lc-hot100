@@ -1,4 +1,8 @@
+/**
+ * @description: 顺时针螺旋顺序访问
+ */
 class Solution {
+    // 时间O(mn) 空间O(mn)
     public List<Integer> spiralOrder(int[][] matrix) {
         
         int rows = matrix.length;
@@ -6,6 +10,7 @@ class Solution {
         boolean[][] visited = new boolean[rows][cols]; // 记录访问过的元素
         List<Integer> ans = new ArrayList<>();
         
+        // 方向映射  右 下 左 上
         int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}}; // 访问方向
         int directionIdx = 0; // 当前方向索引
 
