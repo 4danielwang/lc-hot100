@@ -1,10 +1,14 @@
+/**
+ * @description: 已经升序排列的链表数组，合并到一个升序链表中
+ */
 class Solution {
-    // 时间O(Llogm) 空间O(1) m是lists长度，L是所有链表中节点总数
+    // 时间O(NlogK) 空间O(1) N是所有链表中节点总数，K是链表条数
     public ListNode mergeKLists(ListNode[] lists) {
         int m = lists.length;
         if (m == 0) {
             return null;
         }
+        // 2 4 6 8个一组合并 自底向上
         for (int step = 1; step < m; step *= 2) {
             for (int i = 0; i < m - step; i += step * 2) {
                 lists[i] = mergeTwoLists(lists[i], lists[i + step]);

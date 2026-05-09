@@ -1,3 +1,6 @@
+/**
+ * @description: 找到nums数组中严格递增的子序列（可以删除数组元素但不能改变顺序）最大的长度
+ */
 class Solution {
     // 时间O(nlogn) 空间O(1)
     public int lengthOfLIS(int[] nums) {

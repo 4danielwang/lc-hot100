@@ -1,4 +1,8 @@
+/**
+ * @description: 返回nums数组的所有可能的全排列，顺序不限定
+ */
 class Solution {
+    // 时间O(N*N!)，空间O(N)
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
 
@@ -25,9 +29,9 @@ class Solution {
         for(int j=0;j<nums.length;j++){
             // 跳过已经在path的元素
             if(!path.contains(nums[j])){
-                path.add(nums[j]);
+                path.add(nums[j]); // 添加到访问路径最后一个元素
                 dfs(nums, path ,ans);
-                path.remove(path.size()-1);
+                path.remove(path.size()-1); // 回退移除访问路径最后一个元素
             }
         }
     }

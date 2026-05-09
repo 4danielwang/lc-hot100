@@ -1,26 +1,26 @@
+/**
+ * @description: 接雨水:给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+ */
+// 一个下标i位置的接水量，取决于i位置左边最高的柱子和右边最高的柱子，二者的较小值减去i位置的柱子高度
 class Solution {
+    // 时间O(N) 空间O(1)
     public int trap(int[] height) {
-        int n = height.length;
-        int ans=0;
-        // 前缀最大值 左边水桶高度
-        int[] pre = new int[n];
-        pre[0] = height[0];
-        for(int i=1;i<n;i++){
-            pre[i] = Math.max(pre[i-1], height[i]);
+        int ans = 0;
+        // 双指针
+        int left = 0, right = height.length - 1;
+        // 左右柱子最高高度
+        int leftMax = 0, rightMax = 0;
+        while (left < right) {
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
+            if (height[left] < height[right]) {
+                ans += leftMax - height[left];
+                ++left;
+            } else {
+                ans += rightMax - height[right];
+                --right;
+            }
         }
-
-        // 后缀最大值 右边水桶高度
-        int[] suf = new int[n];
-        suf[n-1] = height[n-1];
-        for(int i=n-2;i>=0;i--){
-            suf[i] = Math.max(suf[i+1], height[i]);
-        }
-
-        for(int i=0;i<n;i++){
-            // 可以装水 左右水桶最小值-水面高度
-            ans += Math.min(pre[i], suf[i]) - height[i];
-        }
-
         return ans;
     }
 }
