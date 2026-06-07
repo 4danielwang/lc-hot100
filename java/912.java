@@ -1,4 +1,7 @@
 import java.util.*;
+/**
+ * @description: 自己实现快速排序
+ */
 class Solution {
     public int[] sortArray(int[] nums) {
         quicksort(0, nums.length-1, nums);
@@ -29,6 +32,7 @@ class Solution {
             }
             swap(nums, left, right);
 
+            // 找到第一个大于pivot的元素，进行交换
             while(left<right && nums[left]<=pivot){
                 left++;
             }
