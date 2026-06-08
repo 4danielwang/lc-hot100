@@ -1,5 +1,13 @@
+/**
+ * @description 合并两个有序数组到第一个数组中
+ * nums1长度m+n,前m个元素是有效元素,nums2长度ns
+ * [1,2,3,0,0,0], m = 3
+ * [2,5,6],       n = 3
+ * 输出: [1,2,2,3,5,6]
+ */
 class Solution {
     // 时间O(m+n) 空间O(1)
+    // 逆向双指针
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int p1 = m - 1;
         int p2 = n - 1;
