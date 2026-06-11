@@ -1,3 +1,8 @@
+/**
+ * @description: 翻转字符串里的单词, 不考虑空格,翻转每个单词 trim 逆序join
+ * the sky is blue -> blue is sky the
+ */
+// 时间O(n) 空间O(n)
 class Solution {
     public String reverseWords(String s) {
         // trim去掉首尾空格

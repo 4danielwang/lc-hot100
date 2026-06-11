@@ -1,69 +1,30 @@
+/**
+ * @description: 和为k的子数组(数组的连续非空序列)的个数 前缀和+哈希表
+ * [1,1,1], k=2 输出: 2
+ * [1,2,3], k=3 输出: 2
+ * 把区间和变成两数之差
+ */
+// 时间O(n) 空间O(n)
 class Solution {
-    // [i-j]的子数组的和 等于[0-j]-[0-i-1]的子数组前缀和
-    // 然后判断他是否等于k 建立等式
-    // prefixSum[m]代表[0-m]前缀和
-
-    // 本题目标：找到prefixSum[j]-prefixSum[i]=k的所有的组合
-    public int subarraySum(int[] nums, int k) {
-        // 前缀和出现的次数​​
-        Map<Integer,Integer> sumToCountMap = new HashMap<>();
-        sumToCountMap.put(0, 1); // 空数组有一个
-        int sum=0; // 计算当前前缀和
-        int count=0; 
-
-        // 遍历j的位置,查找有多少i满足条件
-        for(int num : nums){
-            sum += num;
-            // 如果存在，说明之前有某个位置 i 使得 prefixSum[i] = sum - k
-            if(sumToCountMap.containsKey(sum-k)){
-                count+=sumToCountMap.get(sum-k);
-            }
-            sumToCountMap.put(sum, sumToCountMap.getOrDefault(sum, 0) + 1);
-
-        }
-        return count;
-    }
-}
-// 第二次
-class Solution {
+    // pre[j] - pre[i-1] == k => pre[i-1] == pre[j] - k
+    // 有没有哪个位置的前缀和恰好等于 pre[j] - k 有的话就找到一个和为k的子数组
     public int subarraySum(int[] nums, int k) {
         int ans=0;
-        int s=0; // 当前的前缀和
-
+        int pre=0; // 当前位置前缀和
         
-        Map<Integer,Integer> valueToCount = new HashMap<>();
-        // 原本是处理s[] 现在边计算边处理 没有s[0] 需要添加一个映射项
-        valueToCount.put(0,1);
-        for(int num : nums){
-            s+=num;
-
-            // 找到是否存在s[j]-k
-            ans+=valueToCount.getOrDefault(s-k, 0);
-            // 更新s[j]的次数
-            valueToCount.put(s, valueToCount.getOrDefault(s,0)+1);
-        }
-        return ans;
-    }
-}
-// 参考leetcode 303关于前缀和的定义
-// 前缀和数组长度为n+1 s[0]=0
-class Solution {
-    // 遍历nums过程中 计算前缀和pre 计算中找到pre-k之前出现的次数 累加
-    // prefix[j]-prefix[i] = k 找到符合条件的i,i<j && prefix[i] = prefix[j]-k
-    public int subarraySum(int[] nums, int k) {
-        int ans=0;
-        int pre=0; // 前缀和
-
+        // key是前缀和,value是前缀和出现的次数
         Map<Integer,Integer> preToCount = new HashMap<>();
-        // 根据定义 prefix[0]=0 一定有一个为0的前缀和
-        // 注意不要遗漏
+        // 根据定义 prefix[0]=0 一定有一个为0的前缀和 注意不要遗漏
         preToCount.put(0,1);
 
         for(int num : nums){
-            pre += num; // 前缀和计算
+            pre += num; // 当前位置的前缀和计算
+            // 去历史记录里查，有没有出现过 pre - k
             if(preToCount.containsKey(pre-k)){
+                // 如果有，它出现过几次，就意味着有几个满足条件的子数组，累加到结果里
                 ans += preToCount.get(pre-k);
             }
+            // 把当前的前缀和也记录到哈希表中，供后面的数字使用
             preToCount.put(pre, preToCount.getOrDefault(pre, 0) + 1);
         }
 
