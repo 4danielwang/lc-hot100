@@ -1,39 +1,24 @@
 /**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ * @description: 两两交换链表中的节点
+ * [1,2,3,4] 输出: [2,1,4,3]
  */
 class Solution {
-    // 数组记录 随机访问
-    private List<ListNode> list = new ArrayList<>();
+    // 时间O(n) 空间O(1)
     public ListNode swapPairs(ListNode head) {
-        // 少于2个节点
-        if(head == null || head.next == null){
-            return head;
+        // 用一个dummy节点
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+        // temp表示当前到达的节点 每次交换temp后面的两个节点
+        ListNode temp = dummyHead;
+        while (temp.next != null && temp.next.next != null) {
+            ListNode node1 = temp.next;
+            ListNode node2 = temp.next.next;
+            // 交换node1和node2
+            temp.next = node2;
+            node1.next = node2.next;
+            node2.next = node1;
+            temp = node1; // 下一个temp 后续两个节点需要交换
         }
-        for(ListNode p =head;p!=null;p=p.next){
-            list.add(p);
-        }
-        
-        // 交换两个元素位置
-        for(int i=0;i<list.size();i+=2){
-            if(i+1 <list.size()){
-                Collections.swap(list, i, i+1);
-            }
-        }
-        ListNode dummy = new ListNode(0, null);
-        ListNode rear = dummy;
-        for(ListNode t : list){
-            rear.next = t;
-            rear = rear.next;
-        }
-        rear.next = null;
-        return dummy.next;
-        
+        return dummyHead.next;
     }
 }
