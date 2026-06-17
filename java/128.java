@@ -1,32 +1,37 @@
-import java.util.*;
+import java.util.Set;
 
+/**
+ * @description: 未排序的数组中,找出数字连续的最长序列的长度(只要能找到连续的数字就算连续,不要求数组中排序是连续的)
+ *               快速跳过不是连续序列的数字,只从连续序列的起点开始查找 当遇到num判断num-1不在nums里面,num就是起点
+ * @example: [100, 4, 200, 1, 3, 2] => [1, 2, 3, 4] => 输出4
+ */
 class Solution {
+    // 时间O(n) 空间O(n)
     public int longestConsecutive(int[] nums) {
-       // hashSet去重,不需要排序
-       Set<Integer> set = new HashSet<>();
-       for(int x: nums){
-        set.add(x);
-       }
-
-       int maxNum = 0;
-       for(Integer x : set){
-        // 如果x-1在set 直接跳过，因为肯定有更长的子序列了
-        if(set.contains(x-1)){
-            continue;
+        // hashSet去重
+        Set<Integer> set = new HashSet<>();
+        for (int x : nums) {
+            set.add(x);
         }
-        // 不断查找x~x+y
-        int longest = 1; // 当前轮的连续序列长度
-        int y = x+1; //  从x+1～x+y
-        // todo 可以优化掉longest变量，直接用y-x计算长度
-        while(set.contains(y)){
-            longest++;
-            y++;
-        }
-        // 更新最长长度
-        maxNum = Math.max(maxNum, longest);
-       }
 
-       return maxNum;
+        int ans = 0;
+        for (Integer num : set) {
+            // 只对连续序列的“起点”进行匹配 num-1存在则是起点
+            if (!set.contains(num - 1)) {
+                int longest = 1; // 当前序列长度
+                int currentNum = num; // 当前序列最大数字
+
+                // 不断往后找连续的数字
+                while (set.contains(currentNum + 1)) {
+                    longest++;
+                    currentNum++;
+                }
+                // 更新最长长度
+                ans = Math.max(ans, longest);
+            }
+        }
+
+        return ans;
 
     }
 }

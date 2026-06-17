@@ -1,47 +1,34 @@
+/**
+ * @description: 找到数组中乘积最大的非空连续子数组(至少包含一个数字),返回乘积
+ *               fMax记录最大值 fMin记录最小值
+ *               当遇到新的nums[i] 最大乘积有3种情况:
+ *               1.自己本身
+ *               2.正正得最大值 fMax
+ *               3.负负得最大值 fMin
+ *               fMax[i]=max(fMax[i-1]*nums[i], fMin[i-1]*nums[i], nums[i])
+ *               fMin[i]=min(fMax[i-1]*nums[i], fMin[i-1]*nums[i], nums[i])
+ * 
+ *               空间优化:滚动数组,fMax[i] 只与fMax[i-1], fMin[i-1]和当前值有关, fMin[i]
+ *               只与fMax[i-1], fMin[i-1]和当前值有关.用两个变量交替更新
+ */
 class Solution {
+
+    // 时间O(n) 空间O(1)
     public int maxProduct(int[] nums) {
-        // fMax[i] 表示[0~i-1]的最大乘积
-        // fMin[i] 表示[0~i-1]的最小乘积
-        // nums[i] 当前值 可以看作一个子数组
-        // 求最大乘积有三种情况 取最大 最小的就取三者最小
-        // - 当前值(>0) * 上一次计算的最大值
-        // - 当前值(<0) * 上一次计算的最小值
-        // - 当前值
 
-        // 先计算出i=0 方便i=1获取fMax[i-1], fMin[i-1]
         int n = nums.length;
-        int[] fMax = new int[n];
-        int[] fMin = new int[n];
+        int ans = nums[0];
+        // 初始化fMax fMin为nums[0]
+        int fMax = nums[0];
+        int fMin = nums[0];
 
-        fMax[0] = fMin[0] = nums[0];
-        for(int i=1;i<n;i++){
-            fMax[i] = Math.max(fMax[i-1] * nums[i], Math.max(fMin[i-1] * nums[i], nums[i]));
-            fMin[i] = Math.min(fMax[i-1] * nums[i], Math.min(fMin[i-1] * nums[i], nums[i]));
+        for (int i = 1; i < n; i++) {
+            // 旧的fMax 下面会修改fMax
+            int fMaxOld = fMax;
+            fMax = Math.max(fMaxOld * nums[i], Math.max(fMin * nums[i], nums[i]));
+            fMin = Math.min(fMaxOld * nums[i], Math.min(fMin * nums[i], nums[i]));
+            ans = Math.max(ans, fMax);
         }
-
-        return Arrays.stream(fMax).max().getAsInt();
-    }   
-
-        // 时间优化 O(1)
-        // fMax[i] 只与fMax[i-1]，当前值有关
-        // fMin[i] 只与fMin[i-1]，当前值有关
-        public int maxProduct(int[] nums) {
-       
-            int n = nums.length;
-            int ans = nums[0];
-            int fMax = nums[0];
-            int fMin = nums[0];
-
-            // 从i=1开始 每次计算f[i]只需要f[i-1]
-            for(int i=1;i<n;i++){
-                // 需要保存原来的fMax 计算fMin用到
-                int mx = fMax;
-                // 新的 fMax 可能是：num 本身、旧 fMax * num、或者 旧 fMin * num
-                fMax = Math.max(fMax * nums[i], Math.max(fMin * nums[i], nums[i]));
-                // 新的 fMin 可能是：num 本身、旧 fMax * num、或者 旧 fMin * num
-                fMin = Math.min(mx * nums[i], Math.min(fMin * nums[i], nums[i]));
-                ans = Math.max(ans, fMax);
-            }
-            return ans;
-    }   
+        return ans;
+    }
 }

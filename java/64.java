@@ -1,41 +1,55 @@
+/**
+ * @description: 从m x n网格中找到一条左上角到右下角的路径, 使得路径上的数字总和为最小。(每次只能向下或者向右移动一步)
+ *               dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])
+ *               空间优化:滚动数组,dp[i][j]只与dp[i-1][j]和dp[i][j-1]有关
+ */
 class Solution {
 
-
-    // 动态规划 递归写法
-    // grid[i][j]是从左上角到[i][j]的最小路径和 来源只能是上面或者左边
+    // 时间O(mn) 空间O(1)
     public int minPathSum(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
 
-        // 记忆化数组
-        int[][] memo = new int[m][n];
-        // 初始化内部数组
-        for(int[] row : memo){
-            Arrays.fill(row, -1);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                // 第一行只能从左边过来 dp[i][j] = grid[i][j] + dp[i][j-1]
+                if (i == 0)
+                    grid[i][j] += grid[i][j - 1];
+                // 第一列只能从上边过来 dp[i][j] = grid[i][j] + dp[i-1][j]
+                else if (j == 0)
+                    grid[i][j] += grid[i - 1][j];
+                // 普通格子 dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])
+                else
+                    grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+            }
         }
-        
-        // 需要找到到最右下角的最小路径和
-        return dfs(m-1, n-1, grid, memo);
+        return grid[m - 1][n - 1];
     }
 
-    /**
-      * i,j 当前横纵下标
-      * memo: 保存记忆 减少递归次数
-     */
-    private int dfs(int i, int j, int[][] grid, int[][] memo){
-        // 超过边界 直接返回最大值
-        if(i<0 || j<0){
-            return Integer.MAX_VALUE;
-        }
-        // 左上角 起点值
-        if(i==0 && j==0){
-            return grid[i][j];
+    // 时间O(mn) 空间O(n)
+    public int minPathSum2(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        // dp 数组代表当前行的状态
+        int[] dp = new int[n];
+
+        // 1. 初始化第一行
+        dp[0] = grid[0][0];
+        for (int j = 1; j < n; j++) {
+            dp[j] = dp[j - 1] + grid[0][j];
         }
 
-        if(memo[i][j] != -1){
-            return memo[i][j];
+        // 2. 从第二行开始向下遍历
+        for (int i = 1; i < m; i++) {
+            // 第一列的元素只能从上面下来
+            dp[0] = dp[0] + grid[i][0];
+
+            // 遍历当前行的其他元素
+            for (int j = 1; j < n; j++) {
+                dp[j] = Math.min(dp[j], dp[j - 1]) + grid[i][j];
+            }
         }
-        // 保存记忆
-        return memo[i][j] = Math.min(dfs(i-1, j, grid, memo),dfs(i,j-1,grid,memo)) + grid[i][j];
+
+        return dp[n - 1];
     }
 }
