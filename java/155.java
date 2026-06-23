@@ -1,39 +1,33 @@
+/**
+ * @description: 支持 push、pop、top 操作，并能在常数时间内检索到最小元素的栈。
+ */
+// 时间O(1) 空间O(n)
 class MinStack {
-    private Deque<Integer> stack = new ArrayDeque<>();
-    // 栈顶保存当前元素的最小值
-    private Deque<Integer> helpStack = new ArrayDeque<>();
+    Deque<Integer> xStack;
+    Deque<Integer> minStack;
 
     public MinStack() {
-        helpStack.push(Integer.MAX_VALUE);
+        xStack = new LinkedList<Integer>();
+        minStack = new LinkedList<Integer>();
+        minStack.push(Integer.MAX_VALUE);
     }
-    
-    // 入栈需要找到最小值 更新helpStack
-    public void push(int val) {
-        stack.push(val);
-        // 把最小栈顶和当前值比较取最小放入栈顶
-        helpStack.push(Math.min(val, helpStack.peek()));
+
+    // 入栈时更新最小值栈
+    public void push(int x) {
+        xStack.push(x);
+        minStack.push(Math.min(minStack.peek(), x));
     }
-    
-    // 出栈直接出
+
     public void pop() {
-        stack.pop();
-        helpStack.pop();
+        xStack.pop();
+        minStack.pop();
     }
-    
+
     public int top() {
-        return stack.peek();
+        return xStack.peek();
     }
-    
+
     public int getMin() {
-        return helpStack.peek();
+        return minStack.peek();
     }
 }
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(val);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */
