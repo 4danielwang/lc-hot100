@@ -1,52 +1,22 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ * @description: 验证是否是一个有效的BST二叉搜索树
+ * 思路：递归判断或者中序遍历判断
  */
 class Solution {
+    // 时间O(n) 空间O(n)
     public boolean isValidBST(TreeNode root) {
-        if(root == null) {
-            return true;
-        }
-        if(!lesser(root.left, root.val) || !larger(root.right, root.val)){
-            return false;
-        }
-
-        return isValidBST(root.left) && isValidBST(root.right);
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    // 判断当前子树的所有值 是否都小于value
-    private boolean lesser(TreeNode root, int value){
-        if(root == null) {
+    // 判断node子树中所有节点的值是否都在 (lower,upper)范围 
+    public boolean isValidBST(TreeNode node, long lower, long upper) {
+        if (node == null) {
             return true;
         }
-        // 严格小于 大于或等于就是false
-        if(root.val >= value){
+        if (node.val <= lower || node.val >= upper) {
             return false;
         }
-        return lesser(root.left, value) && lesser(root.right, value);
-    }
-
-    // 判断当前子树的所有值 是否都大于value
-    private boolean larger(TreeNode root, int value){
-        if(root == null) {
-            return true;
-        }
-
-        // 严格大于 小于或等于就是false
-        if(root.val <= value){
-            return false;
-        }
-        return larger(root.left, value) && larger(root.right, value);
+        // 当前node的值在(lower,upper)范围内，继续判断左右子树
+        return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * @description: 买卖股票的最佳时机 II，根据股票价格数组，计算最大利润。可以多次卖出买入股票（同一时间只能持有1支股票）
+ * @extra：对比买卖股票的最佳时机 I，只能买卖一次
+ */
 class Solution {
     public int maxProfit(int[] prices) {
         return solution2(prices);
