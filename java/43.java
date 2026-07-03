@@ -1,55 +1,48 @@
+/**
+ * @description: 两个字符串数字乘积,返回字符串,不能用BigInteger和库
+ */
 class Solution {
-  // leetcode 415 字符串相加
-    private String addString(String s1, String s2){
-        StringBuilder sb = new StringBuilder();
-        int carry=0; // 进位
-        
-        // 从末尾开始加 更新carry
-        for(int i=s1.length()-1, j=s2.length()-1;i>=0 || j>=0 || carry !=0; i--,j--){
-            int x = i<0?0:s1.charAt(i)-'0'; //只剩下carry的时候 
-            int y = j<0?0:s2.charAt(j)-'0'; //只剩下carry的时候 
-            int sum = (x+y+carry) %10;
-            carry = (x+y+carry) / 10;
-            sb.append(sum);
-        }
-        // 从末尾倒着计算 需要再翻转一次
-        return sb.reverse().toString();
-    }
-
+    // 时间O(m*n) 空间O(m+n)
     public String multiply(String num1, String num2) {
-        // 其中一个为0 直接返回
-        if(num1.equals("0") || num2.equals("0")){
+        // 特殊情况处理：只要有一个是0，结果就是0
+        if (num1.equals("0") || num2.equals("0")) {
             return "0";
         }
 
-        // 遍历num2的每一位，与num1相乘
-        // 计算两个字符串的和 每多一位 后面要加一个0
-        String ans = "0";
+        int m = num1.length();
+        int n = num2.length();
+        // 结果的最大长度为 m + n
+        int[] res = new int[m + n];
 
-        // 同样是从低位到高位计算累加
-        for(int i=num2.length()-1;i>=0;i--){
-            int carry=0;
-            StringBuilder sb = new StringBuilder();
-            // 补0 计算需要补几个0
-            int zeros = num2.length()-1-i;
-            for(int j=0;j<zeros;j++){
-                sb.append(0);
+        // 从个位数开始逐位相乘
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                // 算出当前两个字符的乘积
+                int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+
+                // num1[i]*num2[j]的结果分别在res中对应的两个位置res[i+j]和res[i+j+1]
+                int p1 = i + j; // 高位（进位）
+                int p2 = i + j + 1; // 低位
+
+                // 将乘积加上当前低位已经存在的值（可能来自上一次计算的进位）
+                int sum = mul + res[p2];
+
+                // 更新低位和高位
+                res[p2] = sum % 10;
+                res[p1] += sum / 10; // 注意这里是 +=，因为高位可能本来就有值
             }
-            // num2用来乘的那位数
-            int n2 = num2.charAt(i)-'0'; 
-            
-            // 计算num1 * n2的结果
-            // 遍历num1的每一位
-            for(int j=num1.length()-1;j>=0 || carry!=0;j--){
-                int n1 = j<0?0:num1.charAt(j)-'0'; //只剩下carry的时候 
-                int product = (n1*n2+carry)%10;
-                carry = (n1*n2+carry)/10;
-                sb.append(product);
-            }
-             // 累加两数之和
-            ans = addString(ans, sb.reverse().toString());
         }
-       
-        return ans;
+
+        // 将结果数组转化为字符串
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < res.length; i++) {
+            // 忽略前导 0（由于我们分配了 m+n 的空间，首位极有可能是 0）
+            if (i == 0 && res[i] == 0) {
+                continue;
+            }
+            sb.append(res[i]);
+        }
+
+        return sb.toString();
     }
 }
