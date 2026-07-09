@@ -1,50 +1,60 @@
+/**
+ * @description: 给定一个经过编码的字符串，返回它解码后的字符串。编码规则为:
+ *               k[encoded_string]，表示encoded_string重复k次
+ * @example: 输入: s = "3[a]2[bc]" 输出: "aaabcbc"
+ * @example: 输入: s = "3[a2[c]]" 输出: "accaccacc"
+ *           思路: 递归从左到右解析字符串
+ */
 class Solution {
-    // 用双向链表模拟栈
-    // getLast addLast removeLast
-    private LinkedList<String> stack = new LinkedList<>();
+    String src;
+    int ptr; // 当前解析到的位置
 
+    // 时间O(S) 空间O(n) S是解码后字符串的长度 n是编码字符串s的长度
     public String decodeString(String s) {
-        
-        char[] ar = s.toCharArray();
-        int i=0; // 当前读取s的位置指针
-        while(i < ar.length){
-            // 数字：获取连续多位数字 直接入栈
-            // 字母或者左[ 直接入栈
-            // 右]出栈 计算k[encoded_string]片段后 入栈
-            if(Character.isDigit(ar[i])){
-                // 获取连续多位数字
-                StringBuilder sb = new StringBuilder();
-                while(Character.isDigit(ar[i])){
-                    sb.append(ar[i++]);
-                }
-                stack.addLast(sb.toString());
-            }else if(Character.isLetter(ar[i]) || ar[i] == '['){
-                stack.addLast(String.valueOf(ar[i++]));
-            }else{
-                // 用栈记录[]之间所有的字符串 不能直接用sb最后reverse
-                // 需要保证单词逆序 而不是整体逆序 ab cd ef -> ef cd ab 而不是 fe dc ba 
-                LinkedList<String> reverse = new LinkedList<>();
-                while(!"[".equals(stack.getLast())){
-                    reverse.addFirst(stack.removeLast()); // 取出栈顶 放入队列，逆序
-                }
-                // encoded_string
-                String encode = String.join("", reverse);
-                // 出栈[
-                stack.removeLast();
-                // 出栈k
-                int k = Integer.parseInt(stack.removeLast());
+        src = s;
+        ptr = 0;
+        return getString();
+    }
 
-                // 清空sb 重复利用
-                // 转换 k[encoded_string]
-                StringBuilder sb = new StringBuilder();
-                while(k-- > 0){
-                    sb.append(encode);
-                }
-                stack.addLast(sb.toString());
-                i++;
-            }
+    public String getString() {
+        // 终止条件: ptr到达字符串末尾或者遇到右括号
+        if (ptr == src.length() || src.charAt(ptr) == ']') {
+            return "";
         }
-        // 顺序拼接stack剩下的string
-        return String.join("", stack);
+
+        char cur = src.charAt(ptr);
+        // 重复次数k
+        int repTime = 1;
+        String ret = "";
+
+        // 当前位是数字位
+        if (Character.isDigit(cur)) {
+            // 解析出数字
+            repTime = getDigits();
+            // 过滤左括号
+            ++ptr;
+            // 递归解析String
+            String str = getString();
+            // 过滤右括号
+            ++ptr;
+            // 解码重复k次的字符串
+            while (repTime-- > 0) {
+                ret += str;
+            }
+        } else if (Character.isLetter(cur)) {
+            // 当前位是字母位
+            ret = String.valueOf(src.charAt(ptr++));
+        }
+        // 递归解析剩余的字符串
+        return ret + getString();
+    }
+
+    // 解析出连续数字k
+    public int getDigits() {
+        int ret = 0;
+        while (ptr < src.length() && Character.isDigit(src.charAt(ptr))) {
+            ret = ret * 10 + src.charAt(ptr++) - '0';
+        }
+        return ret;
     }
 }
