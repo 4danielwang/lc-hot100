@@ -1,41 +1,31 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ * @description: 给一个二叉树,统计所有根节点到叶子结点的访问路径的字符串的数字之和
+ * 思路: dfs从root开始访问所有的节点,用pathSum记录当前路径的数字,当访问到叶子结点累加这个数字到ans
  */
 class Solution {
+    // 记录当前已经统计的路径数字和
     private int ans = 0;
     public int sumNumbers(TreeNode root) {
         dfs(0, root);
         return ans;
     }
 
-    // currentSum: 当前访问到的位置的路径数字之和
-    private void dfs(int currentSum, TreeNode root){
+    // pathSum: 当前访问的路径数字之和
+    private void dfs(int pathSum, TreeNode root){
         if(root == null){
             return;
         }
         // 访问节点 更新当前sum
-        currentSum = currentSum * 10 + root.val;
+        pathSum = pathSum * 10 + root.val;
 
-        // 若叶子节点 更新ans
+        // 叶子节点 找到一个路径数字 累加到ans
         if(root.left == null && root.right==null){
-            ans += currentSum;
+            ans += pathSum;
             return ;
         }
         
         // 递归左右子树
-        dfs(currentSum, root.left);
-        dfs(currentSum, root.right);
+        dfs(pathSum, root.left);
+        dfs(pathSum, root.right);
     }
 }
