@@ -1,5 +1,6 @@
 /**
- * @description: 有效的括号
+ * @description: 有效的括号，判断只包括左右括号的字符串是否有效
+ * @example: "()"、"()[]{}"、"{[]}" 是有效的，"(]"、"([)]" 是无效的
  */
 class Solution {
     // 时间O(n) 空间O(n)
@@ -15,18 +16,18 @@ class Solution {
             put(']', '[');
             put('}', '{');
         }};
-        // 栈存储左括号，遇到右括号就弹出栈顶元素进行匹配
+        // 遇到左括号入栈，遇到右括号就弹出栈顶元素进行括号对匹配
         Deque<Character> stack = new LinkedList<Character>();
         for (int i = 0; i < n; i++) {
             char ch = s.charAt(i);
             if (pairs.containsKey(ch)) {
-                // 检查栈顶是否是对应的左括号和是否为空
+                // 检查栈顶是否和当前的右括号匹配或者为空栈
                 if (stack.isEmpty() || stack.peek() != pairs.get(ch)) {
                     return false;
                 }
-                stack.pop();
+                stack.pop(); // 括号匹配出栈
             } else {
-                stack.push(ch);
+                stack.push(ch); // 左括号入栈
             }
         }
         return stack.isEmpty();
