@@ -1,5 +1,10 @@
+/**
+ * @description: 给定两个字符串形式的非负整数num1和num2，计算它们的和，并以字符串形式返回
+ * @example: 输入: num1 = "11", num2 = "123" 输出: "134"
+ * 思路： 然后从末尾到开头逐位相加，注意进位即可
+ */
 class Solution {
-    // 时间O(max(m,n)) 空间O(max(m,n))
+    // 时间O(n) 空间O(n) n是两个字符串的最大长度
     public String addStrings(String num1, String num2) {
         int i = num1.length() - 1, j = num2.length() - 1, add = 0;
         StringBuffer ans = new StringBuffer();

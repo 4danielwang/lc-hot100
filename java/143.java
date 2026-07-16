@@ -1,5 +1,5 @@
 /**
- * @description: 重排链表
+ * @description: 重排链表： 寻找链表中点+链表逆序+合并链表
  * [1,2,3,4] -> [1,4,2,3]
  */
 class Solution {
@@ -12,7 +12,7 @@ class Solution {
         // 寻找链表中点
         ListNode mid = middleNode(head);
         ListNode l1 = head;
-        ListNode l2 = mid.next; // 中点的下一个节点 是后半部分链表的头节点
+        ListNode l2 = mid.next; // 中点的下一个节点 是后半部分链表的头节点（链表长奇数个节点的话，l2比l1少一个节点）
         mid.next = null;
 
         // 链表逆序
@@ -22,9 +22,11 @@ class Solution {
         mergeList(l1, l2);
     }
 
+    // 寻找中点：快慢指针 一个走两步 一个走一步，快指针到达末尾时慢指针正好在中点
     public ListNode middleNode(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
+        // fast停在倒数第二个（偶数个节点）或者倒数第一个节点（奇数个节点）
         while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
