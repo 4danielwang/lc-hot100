@@ -2,7 +2,7 @@
  * @description: 返回所有满足nums[i]+nums[j]+nums[k]==0且i,j,k均不同的三元组，不可重复
  */
 class Solution {
-    // 时间O(N^2) 空间O(logN)
+    // 时间O(N^2) 空间O(logN) 如果不考虑排序算法 空间O(1)
     public List<List<Integer>> threeSum(int[] nums) {
         // 有序数组可以用双指针
         Arrays.sort(nums);
@@ -34,14 +34,14 @@ class Solution {
                 } else if (res < 0) {
                     j++;
                 } else {
-                    // 如果找到一组 就往中间缩减left right
+                    // 如果找到一组 就往中间缩减left right 找到下一组不相同的 j和k
                     list.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     j++;
-                    // 优化：掉连续重复数字
+                    // 优化：掉连续重复数字 找到第一个不相同的j
                     while (j < k && nums[j] == nums[j - 1])
                         j++;
                     k--;
-                    // 优化：去掉连续重复数字
+                    // 优化：去掉连续重复数字 找到第一个不相同的k
                     while (j < k && nums[k] == nums[k + 1])
                         k--;
                 }

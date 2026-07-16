@@ -1,17 +1,8 @@
 /**
- * @description: k（k值小于或等于链表的长度）个一组翻转链表，节点数不是k的整数倍，保持原来的顺序
+ * @description: k个一组翻转链表:（k值小于或等于链表的长度），节点数不是k的整数倍，保持原来的顺序
  * @example: 输入：head = [1,2,3,4,5], k = 2 输出：[2,1,4,3,5]
  * @example: 输入：head = [1,2,3,4,5], k = 3 输出：[3,2,1,4,5]
  */
-// 节点定义
-public class ListNode {
-    int val;
-    ListNode next;
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-}
-
 class Solution {
     // 时间复杂度O(N)，空间复杂度O(1)
     public ListNode reverseKGroup(ListNode head, int k) {
@@ -30,7 +21,7 @@ class Solution {
         // 创建dummy
         ListNode dummy = new ListNode(0, head);
 
-        // p0是每一组reverse的dummy（第一个节点的前一个节点），用于reverse后找到末节点
+        // p0是每一组reverse的dummy（第一个节点的前一个节点），用于reverse后找前一段链表的末节点,连接起来
         ListNode p0=dummy;
         ListNode pre=null;
         ListNode cur=head;
@@ -38,7 +29,7 @@ class Solution {
         // 不够k个节点就不翻转 k个一组处理
         while(n>=k){
             n-=k;
-            // 开始翻转k个节点
+            // 开始翻转k个节点 翻转后pre指向翻转后的头节点，cur指向下一组的头节点(对比以前的链表翻转后cur指向null)
             for(int i=0;i<k;i++){
                 ListNode next=cur.next; // 计算next
                 cur.next=pre; // [pre->cur] => [pre<-cur]

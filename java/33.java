@@ -15,9 +15,9 @@ class Solution {
             // 找到target
             if (nums[mid] == target) return mid;
 
-            // 情况 1：左半部分 [left, mid] 是有序的
+            // 情况 1：[left, mid]是有序的
             if (nums[left] <= nums[mid]) {
-                // 如果 target 就在这个有序范围内，去左边找
+                // 判断target在有序范围内，去左边找
                 if (nums[left] <= target && target < nums[mid]) {
                     right = mid - 1;
                 } else {
@@ -25,9 +25,9 @@ class Solution {
                     left = mid + 1;
                 }
             }
-            // 情况 2：右半部分 [mid, right] 是有序的
+            // 情况 2：[left,mid]是无序的, [mid, right]是有序的
             else {
-                // 如果 target 就在这个有序范围内，去右边找
+                // 判断target在有序范围内，去右边找
                 if (nums[mid] < target && target <= nums[right]) {
                     left = mid + 1;
                 } else {

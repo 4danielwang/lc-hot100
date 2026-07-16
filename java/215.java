@@ -6,7 +6,6 @@ import java.util.Random;
  */
 class Solution {
     // 时间O(n) 空间O(1)
-
     private final Random random = new Random();
 
     // 快速选择+三路划分 把中间等于pivot的元素一次性剥离，判断目标索引在哪个区间
@@ -15,6 +14,7 @@ class Solution {
         int target = nums.length - k;
         int left = 0, right = nums.length - 1;
 
+        // 剩下需要扫描的元素
         while (left <= right) {
             // 1. 随机选取 pivot 避免极端情况（有序数组 时间复杂度的退化）
             int pivotIndex = left + random.nextInt(right - left + 1);
@@ -23,23 +23,24 @@ class Solution {
             // 2. 原地三路划分 每次while结束后被划分为如下的3个区间
             // [left, lt-1]: 小于pivot
             // [gt+1, right]: 大于pivot
-            // [lt, gt]: 等于pivot
+            // [lt, gt]: 等于pivot的区间
             // i: 当前扫描的指针
             int lt = left;
             int i = left;
             int gt = right;
-
+            
+            // 在当前[left,right]进行三路划分
             while (i <= gt) {
                 if (nums[i] < pivot) {
-                    // 发现比 pivot 小的数：
-                    // 把它扔到左边 lt 的位置，然后 lt 和 i 都往前走一步（此时lt和i都是小于pivot）
+                    // 发现比 pivot 小的数, 交换lt和i的值, lt往右(表示小于区域扩大), i往右(表示当前元素已经处理过了)
+                    // 交换后，i指向的元素已经被处理过了，所以i和lt都往前
                     swap(nums, lt++, i++);
                 } else if (nums[i] > pivot) {
-                    // 发现比 pivot 大的数：
-                    // 把它扔到右边 gt 的位置，gt往左退一步，i不自增（此时gt大于pivot但是i不确定,下一轮接着判断）
+                    // 发现比 pivot 大的数, 交换i和gt的值,gt往左(表示大于区域扩大), i不动(表示i指向的元素还没有被处理过)
+                    // 交换后，i指向的元素还没有被处理过，所以i不动，gt往前
                     swap(nums, i, gt--);
                 } else {
-                    // 发现和 pivot 相等的数： 留在中间，i 继续往前探路
+                    // 发现和 pivot 相等的数 lt,lg不变,i往右(表示当前元素已经处理过了)
                     i++;
                 }
             }

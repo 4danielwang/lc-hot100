@@ -1,11 +1,11 @@
 /**
  * @description: 计算网格中岛屿的数量,网格的四条边视为被水包围
+ * 思路: grid[i][j] 0代表水 1代表陆地 2代表访问过
  */
 class Solution {
     // 时间O(mn) m和n分别grid行数和列数
     // 空间O(min(m,n))
     public int numIslands(char[][] grid) {
-        // grid[i][j] 0代表水 1代表陆地 2代表访问过
         int num = 0;
         // 注意grid.length代表一维数组长度
         // grid[i].length代表 第二维数组长度
@@ -23,8 +23,7 @@ class Solution {
     // 深度优先遍历grid
     private void dfs(char[][] grid, int i, int j){
         // 边界判断，非陆地，已访问
-        if(i< 0 || j<0 || i >= grid.length || j >= grid[i].length || grid[i][j] != '1')
-        return ;
+        if(i< 0 || j<0 || i >= grid.length || j >= grid[i].length || grid[i][j] != '1') return ;
         grid[i][j] = '2'; // 标记已访问
         // 分别从四个方向dfs
         dfs(grid, i, j-1);

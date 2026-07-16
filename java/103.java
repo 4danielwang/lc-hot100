@@ -3,18 +3,6 @@ import java.util.Collections;
 /**
  * @description: zigzag遍历二叉树，先从左到右，下一层从右到左，依次交替
  */
-public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
 class Solution {
     // 时间O(n) 空间O(n)
     // 与lc 102的区别：偶数层翻转，奇数层不变
@@ -25,6 +13,7 @@ class Solution {
         
         List<List<Integer>> ans=new ArrayList<>();
        
+        // 根节点入队
         Deque<TreeNode> queue = new LinkedList<>();
         queue.add(root);
 
@@ -33,12 +22,13 @@ class Solution {
     
         // bfs遍历二叉树，在遍历过程中记录层次遍历的数，根据标记调整顺序
         while(!queue.isEmpty()){
-            // 当前层的值 双向队列
+            // 当前层的访问序列
             List<Integer> vals = new LinkedList<>();
 
             // 一层一层的访问 size是下一层的节点个数
             int len = queue.size();
             for(int i=0;i<len;i++){
+                // 出队
                 TreeNode node = queue.remove();
                 if(leftToRight){
                     vals.addLast(node.val);

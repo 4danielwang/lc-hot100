@@ -1,18 +1,11 @@
 /**
  * @description: 普通反转链表
  * @example: [1,2,3,4,5] -> [5,4,3,2,1]
+ * 思路: pre-cur-next 反转指针
  */
-public class ListNode {
-    int val;
-    ListNode next;
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-}
 class Solution {
     // 时间O(n) 空间O(1)
     public ListNode reverseList(ListNode head) {
-        // 这里的dummy可以也去掉的
         ListNode dummy = new ListNode(0, head);
         ListNode pre=null;
         ListNode cur=head;
