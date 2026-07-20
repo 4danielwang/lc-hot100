@@ -31,7 +31,7 @@ class Solution {
             if(!path.contains(nums[j])){
                 path.add(nums[j]); // 添加到访问路径最后一个元素
                 dfs(nums, path ,ans);
-                path.remove(path.size()-1); // 回退移除访问路径最后一个元素
+                path.remove(path.size()-1); // 回溯：移除访问路径最后一个元素
             }
         }
     }

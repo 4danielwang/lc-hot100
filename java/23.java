@@ -1,23 +1,28 @@
 /**
- * @description: 已经升序排列的链表数组，合并到一个升序链表中
+ * @description: 已经升序排列的链表数组，合并为一个升序链表
+ * 思路：递归分治，归并排序
  */
 class Solution {
-    // 时间O(NlogK) 空间O(1) N是所有链表中节点总数，K是链表条数
+    // 时间O(KNlogK) 空间O(logK) N是所有链表中节点总数，K是链表条数
     public ListNode mergeKLists(ListNode[] lists) {
-        int m = lists.length;
-        if (m == 0) {
-            return null;
-        }
-        // 2 4 6 8个一组合并 自底向上
-        for (int step = 1; step < m; step *= 2) {
-            for (int i = 0; i < m - step; i += step * 2) {
-                lists[i] = mergeTwoLists(lists[i], lists[i + step]);
-            }
-        }
-        return lists[0];
+       return merge(lists, 0, lists.length - 1);
     }
 
-    // 21. 合并两个有序链表
+    // 递归分治 left right表示需要合并的lists数组左右区间 返回合并后的链表头节点
+    public ListNode merge(ListNode[] lists, int left, int right) {
+        if (left == right) {
+            return lists[left];
+        }
+        if(left > right) {
+            return null;
+        }
+        int mid = left + (right - left) / 2;
+        ListNode l1 = merge(lists, left, mid);
+        ListNode l2 = merge(lists, mid + 1, right);
+        return mergeTwoLists(l1, l2);
+    }
+
+    // 21. 合并两个有序链表 返回合并后的链表头节点
     private ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode dummy = new ListNode(); // 用哨兵节点简化代码逻辑
         ListNode cur = dummy; // cur 指向新链表的末尾
