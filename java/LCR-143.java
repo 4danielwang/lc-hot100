@@ -3,7 +3,7 @@
  *               规定: 空树不是任意一个树的子结构
  */
 class Solution {
-    // 时间 O(m*n) 空间 O(m)
+   // 时间 O(m*n) 空间 O(m) 
     public boolean isSubStructure(TreeNode tree1, TreeNode tree2) {
         // 如果 tree1 是空的，或者 tree2 是空的，直接返回 False
         if (tree1 == null || tree2 == null) {

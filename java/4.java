@@ -1,55 +1,59 @@
+/**
+ * @description: 寻找两个正序数组的中位数,两个有序数组nums1和nums2,找到中位数
+ * 思路: 二分,找到第k大的元素,每次排除不符合条件的一半数组
+ */
 class Solution {
+    // 时间复杂度O(log(m+n)) 空间复杂度O(1)
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        
-        int m = nums1.length;
-        int n = nums2.length;
-
-        // 中位数对应的下标
-        // eg: 1,2,3,4,5
-        // eg: 1,2,3,4,5,6
-        int leftK = (n+m+1)/2;
-        int rightK = (n+m+2)/2;
-
-        // 分别计算中位数所对应的两个k的第k小的值
-        // 奇数 两个k相等
-        // 偶数 两个k不等 平均
-        return (getKth(nums1,0,m-1,nums2,0,n-1,leftK)+getKth(nums1,0,m-1,nums2,0,n-1,rightK))*0.5;
-    }
-
-    /**
-      * 找到两个有序数组中第k大的值
-      * left1 nums1的开始下标
-      * right1 nums1的结束下标
-      * nums2 left2 right2同理
-     */
-    private int getKth(int[] nums1, int left1, int right1, int[] nums2, int left2, int right2, int k){
-        // 计算两个数组当前长度
-        int len1 = right1-left1+1;
-        int len2 = right2-left2+1;
-
-        // 保证len1一定更小 只能是len1先空 只需要处理len1==0的问题
-        if(len1 > len2){
-            return getKth(nums2, left2, right2, nums1, left1, right1, k);
-        }
-        // 第一个数组为空 直接从第二个数组拿结果
-        if(len1 == 0){
-            return nums2[left2+k-1];
-        }
-        // 只要找第一小的 直接比较left1 left2
-        if(k==1){
-            return Math.min(nums1[left1], nums2[left2]);
-        }
-
-        // 找到两个数组中各自k/2位置
-        int i = left1 + Math.min(len1, k/2) - 1;
-        int j = left2 + Math.min(len2, k/2) - 1;
-
-        // 直接丢弃更小的那k/2
-        if(nums1[i] <nums2[j]){
-            return getKth(nums1, i+1, right1, nums2, left2, right2, k - (i-left1+1));
-        }else{
-            return getKth(nums1, left1, right1, nums2, j+1, right2, k - (j-left2+1));
+        int length1 = nums1.length, length2 = nums2.length;
+        // 两个数组总长度
+        int totalLength = length1 + length2;
+        // 数组长度为奇数的中位数是第totalLength/2+1小的数,偶数的中位数是第totalLength/2和totalLength/2+1小的数的平均值
+        if (totalLength % 2 == 1) {
+            int midIndex = totalLength / 2;
+            double median = getKthElement(nums1, nums2, midIndex + 1);
+            return median;
+        } else {
+            int midIndex1 = totalLength / 2 - 1, midIndex2 = totalLength / 2;
+            double median = (getKthElement(nums1, nums2, midIndex1 + 1) + getKthElement(nums1, nums2, midIndex2 + 1)) / 2.0;
+            return median;
         }
     }
 
+    // 要在两个有序数组中找到第k小的元素，最快的办法是每次排除掉k/2个不可能的元素
+    public int getKthElement(int[] nums1, int[] nums2, int k) {
+        int length1 = nums1.length, length2 = nums2.length;
+        // 双指针
+        int index1 = 0, index2 = 0;
+
+        while (true) {
+            // 边界: nums1到达末尾
+            if (index1 == length1) {
+                return nums2[index2 + k - 1];
+            }
+            // 边界: nums2到达末尾
+            if (index2 == length2) {
+                return nums1[index1 + k - 1];
+            }
+            // 边界: k=1,返回两个数组中最小的那个
+            if (k == 1) {
+                return Math.min(nums1[index1], nums2[index2]);
+            }
+            
+            int half = k / 2;
+            // 注意边界,如果数组长度不够k/2,就取数组最后一个元素
+            int newIndex1 = Math.min(index1 + half, length1) - 1;
+            int newIndex2 = Math.min(index2 + half, length2) - 1;
+            // 比较nums1和nums2的第k/2个元素,根据数学证明,哪边小就排除哪个数组中当前index及其左边的元素
+            int pivot1 = nums1[newIndex1], pivot2 = nums2[newIndex2];
+            // 如果pivot1 <= pivot2,排除pivot1及其左边的元素,否则排除pivot2及其左边的元素
+            if (pivot1 <= pivot2) {
+                k -= (newIndex1 - index1 + 1); // 排除掉的元素个数
+                index1 = newIndex1 + 1; // 极端情况就是到达边界 == length1
+            } else {
+                k -= (newIndex2 - index2 + 1);
+                index2 = newIndex2 + 1;
+            }
+        }
+    }
 }
