@@ -1,26 +1,30 @@
+/**
+ * @description: 比较两个版本号 version1 和 version2。修订号的值是它转换为整数并忽略前导零
+ * @example: 输入 1.2, 1.10 输出 -1
+ * @example: 输入 1.01, 1.001 输出 0
+ * @example: 输入 1.0, 1.0.0 输出 0
+ * 思路：双指针，不断地解析出两个版本号的每一段数字进行比较，按位计算每个数字的大小。不存在的版本号段视为0
+ */
 class Solution {
+    // 时间O(n+m) 空间O(1)
     public int compareVersion(String version1, String version2) {
-        // .是特殊正则符号 要转译. 还要转译\ 于是有2个\\
-        String ar1[] = version1.split("\\.");
-        String ar2[] = version2.split("\\.");
-
-        for(int i=0;i<ar1.length || i<ar2.length;i++){
-            // 默认值为0
-            Integer num1 = 0, num2 = 0;
-            if(i<ar1.length){
-                num1 = Integer.valueOf(ar1[i]);
+        int n = version1.length(), m = version2.length();
+        int i = 0, j = 0;
+        while (i < n || j < m) {
+            int x = 0;
+            for (; i < n && version1.charAt(i) != '.'; ++i) {
+                x = x * 10 + version1.charAt(i) - '0';
             }
-            if(i<ar2.length){
-                num2 = Integer.valueOf(ar2[i]);
+            ++i; // 跳过点号
+            int y = 0;
+            for (; j < m && version2.charAt(j) != '.'; ++j) {
+                y = y * 10 + version2.charAt(j) - '0';
             }
-
-            if(num1 < num2){
-                return -1;
-            }else if(num1 > num2){
-                return 1;
+            ++j; // 跳过点号
+            if (x != y) {
+                return x > y ? 1 : -1;
             }
         }
         return 0;
-
     }
 }
