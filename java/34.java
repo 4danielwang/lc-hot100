@@ -1,48 +1,38 @@
+/**
+ * @description: 在排序数组中查找元素的第一个和最后一个位置, 不存在返回-1
+ * 思路：二分查找，利用lowerbound函数分别找到第一个和最后一个>=target的下标。最后一个>=target下标等于lowerbound(target+1)-1
+ * @example: 输入：nums = [5,7,7,8,8,10], target = 8 输出：[3,4]
+ * @example: 输入：nums = [5,7,7,8,8,10], target = 6 输出：[-1,-1]
+ */
 class Solution {
+    // 时间O(logn) 空间O(1)
     public int[] searchRange(int[] nums, int target) {
-        if(nums==null || nums.length ==0){
-            return new int[]{-1, -1};
-        }
-        // 下界
-        int lo = lowerBound(nums, target);
-        if(lo == nums.length || nums[lo] != target){
-            return new int[]{-1, -1};
-        }
-        // 上界
-        int hi = upperBound(nums, target);
-        return new int[]{lo, hi};
+        int start = lowerBound(nums, target);
+        if(start == nums.length || nums[start] != target) return new int[]{-1, -1};
+        int end = lowerBound(nums, target + 1) - 1; // start存在end一定存在
+        return new int[]{start, end};
     }
 
-    // 计算>=target的最小元素下标
+    // 开区间找到第一个大于等于target的下标
     private int lowerBound(int[] nums, int target){
-        int left=0;
-        int right=nums.length-1;
-
-        // 采用左右闭区间[left, right]
-        while(left<=right){
-            int mid = left + (right-left) / 2;
-            if(nums[mid] < target){
-                left = mid + 1; // target应该在[mid+1, right]
-            }else{ 
-                right = mid -1; // target应该在[left, mid-1]
+        // 循环不变量：
+        // nums[left] < target
+        // nums[right] >= target
+        // 开区间 (left, right) 结束条件为left+1=right
+        int left = -1, right = nums.length;
+        while (left + 1 < right) {
+            int mid = (right - left) / 2 + left;
+            if (nums[mid] < target){ // 应该往右边区间找
+                left = mid;
+            } else {
+                right = mid;
             }
         }
-        return left; // 最终left指向第一个>=target的位置
+
+        // 循环结束后 left+1 = right
+        // 此时 nums[left] < target 而 nums[right] >= target
+        // 所以 right 就是第一个 >= target 的元素下标
+        return right; // 或left+1
     }
 
-    private int upperBound(int[] nums, int target){
-        int left=0;
-        int right=nums.length-1;
-
-        // 采用左右闭区间[left, right]
-        while(left<=right){
-            int mid = left + (right-left) / 2;
-            if(nums[mid] <= target){
-                left = mid + 1; // target应该在[mid+1, right]
-            }else{ 
-                right = mid -1; // target应该在[left, mid-1]
-            }
-        }
-        return right; // 最终right指向最后一个<=target的位置
-    }
 }

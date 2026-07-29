@@ -1,10 +1,10 @@
 /**
  * @description: 课程表. 课程之间有依赖关系,根据依赖数组判断是可以拓扑排序
- * 拓扑排序(判断这个有向图中是否存在环。 如果存在环，说明课程要求有冲突),不存在环(DAG)则可以完成所有课程
- * numCourses = 2, prerequisites = [[1,0]] 输出: true
+ * 思路：拓扑排序(判断这个有向图中是否存在环。 如果存在环，说明课程要求有冲突),不存在环(DAG)则可以完成所有课程
+ * @example: numCourses = 2, prerequisites = [[1,0]] 输出: true
  */
 class Solution {
-    // 用dfs判断是否为DAG 
+    // 时间O(n+m) 空间O(n+m)
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         // prerequisites[ai, bi]表示bi->ai的边
         // 用邻接表表示图,表示每个节点做为起点的边的终点列表
