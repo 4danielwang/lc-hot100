@@ -1,23 +1,25 @@
+/**
+ * @description: 返回数组的多数元素（多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素）
+ * 思路：Boyer-Moore 投票算法。
+ */
 class Solution {
     // 时间O(n) 空间O(1)
     public int majorityElement(int[] nums) {
-        // 每个数都是一个挑战者 ans是当前的擂主 
-        // hp记录生命值
-        // 返回最后的擂主（挑战者）
-        int ans = 0;
-        int hp  = 0;
+        
+        int count = 0; // 多数元素出现次数
+        Integer candidate = null; // 候选的多数元素
 
-        // 每个数是一个挑战者
-        for(int n : nums){
-            // 下一个挑战者为新的擂主
-            if(hp == 0){
-                ans = n;
-                hp = 1;
-            }else{
-                // 同一个门派（相同的值）hp+1，否则-1
-                hp += (n == ans) ? 1 : -1;
+        for (int num : nums) {
+            // 如果count为0，说明当前没有候选的多数元素，将当前元素作为候选
+            if (count == 0) {
+                candidate = num;
             }
+            // 如果当前元素等于候选的多数元素，增加count，否则减少count
+            count += (num == candidate) ? 1 : -1;
         }
-        return ans;
+        // 最终candidate就是多数元素
+        return candidate;
     }
+
+       
 }

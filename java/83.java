@@ -1,14 +1,11 @@
 /**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ * @description: 删除排序链表中的重复元素
+ * @example: 输入: 1->1->2, 输出: 1->2
+ * @example: 输入: 1->1->2->3->3, 输出: 1->2->3
+ * 思路：重复元素在链表中一定是连续的，判断cur和cur.next是否相等，相等就删除cur.next，不相等就移动cur
  */
 class Solution {
+    // 时间O(n) 空间O(1)
     public ListNode deleteDuplicates(ListNode head) {
         if(head == null){
             return null;
