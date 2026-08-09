@@ -1,37 +1,25 @@
-import java.util.*;
-
+/**
+ * @description: nums数组中把0移动到数组末尾，非0元素的相对顺序不变
+ * 思路：双指针，left指针指向已经处理好的序列尾部，right指针指向当前待处理序列头部
+ */
 class Solution {
-     // 方法1:把nums当成栈用
+    
+    // 时间O(n) 空间O(1)
     public void moveZeroes(int[] nums) {
-        int stackSize = 0; // 栈大小
-        for(int num : nums){
-            if(num != 0){
-                nums[stackSize++] = num;
-            }
-        }
-        Arrays.fill(nums, stackSize, nums.length, 0);
-    }
-
-    // 方法2:双指针
-    // 0代表空位
-    // 慢指针指向当前的空位
-    // 快指针找到非0
-    // 交换快慢指针
-    public void moveZeroes2(int[] nums) {
-        int slow=0;
-        int fast=0;
+        int left=0;
+        int right=0;
         
-        // 快指针用于扫描非0
-        while(fast<nums.length){
+        // right从0开始到n-1，找非0元素，找到后和left指针交换，left指针向后移动
+        while(right<nums.length){
             // 找到非0
-            if(nums[fast]!=0){
+            if(nums[right]!=0){
                 // 交换快慢指针位置的元素
-                swap(nums, slow, fast);
-                // 慢指针存储空位 0元素
-                slow++;
+                swap(nums, left, right);
+                // 找到一个非零，left指针向后移动
+                left++;
             }
             // 没找到非0 继续找
-            fast++;
+            right++;
         }
     
     }
