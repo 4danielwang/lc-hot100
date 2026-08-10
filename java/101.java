@@ -3,6 +3,7 @@
  * 思路: 利用双指针,p和q朝着反方向移动,检查p和q是否相等,如果相等继续移动,再判断他们的左右子树是否对称
  */
 class Solution {
+    // 时间O(n) 空间O(n)
     public boolean isSymmetric(TreeNode root) {
         return check(root.left, root.right);
     }

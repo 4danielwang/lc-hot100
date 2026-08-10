@@ -19,7 +19,7 @@ class Solution {
             for(int j=1;j<=n;j++){
                 // 状态转移方程
                 // dp[i][j] = dp[i-1][j-1] + 1 当dp[i-1] == dp[j-1]
-                // dp[i][j] = dp[i-1][j], dp[i][j-1] 当dp[i-1] != dp[j-1]
+                // dp[i][j] = max(dp[i-1][j], dp[i][j-1]) 当dp[i-1] != dp[j-1]
                 if(text1.charAt(i-1) == text2.charAt(j-1)){
                     dp[i % 2][j] = dp[(i - 1) % 2][j - 1] + 1;
                 }else{

@@ -6,6 +6,7 @@ class Solution {
 
     private Map<Integer, Integer> indexMap = new HashMap<>();
     
+    // 时间O(n) 空间O(n)
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         // 构造哈希映射，帮助我们快速定位根节点
         for(int i=0;i<inorder.length;i++){

@@ -1,8 +1,10 @@
 /**
  * @description: 从coins数组中选择数字硬币(数字可以无限重复选择)凑成amount,返回最少的币个数,如果不可能凑成amount,返回-1
  * @example: 输入: coins = [1, 2, 5], amount = 11 输出: 3
+ * 思路: f[i][j]表示前coins[0...i]里面的硬币凑成金额j所需的最少硬币数, 根据选择第i个硬币与否分为两种情况:
+ *    1. 不选择第i个硬币, f[i][j] = f[i-1][j]
+ *    2. 选择第i个硬币, f[i][j] = f[i][j-coins[i]] + 1
  * 空间优化: 滚动数组 f[i][j]只与f[i-1][j]和f[i][j-coins[i]]有关, 所以可以使用滚动数组(2行)优化空间复杂度
- * 思路: f[i][j]表示前coins[0...i]里面的硬币凑成金额j所需的最少硬币数
  */
 class Solution {
     // 时间O(n*amount) 空间O(amount)

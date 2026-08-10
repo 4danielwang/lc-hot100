@@ -5,6 +5,7 @@
 class Solution {
     // 记录当前已经统计的路径数字和
     private int ans = 0;
+    // 时间O(n) 空间O(n)
     public int sumNumbers(TreeNode root) {
         dfs(0, root);
         return ans;
