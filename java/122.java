@@ -14,30 +14,15 @@ class Solution {
     // 时间O(n) 空间O(1)
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        // prev2表示没有股票，prev1表示有股票
-        int prev2 = 0, prev1 = -prices[0];
+        // prev2表示没有股票dp[i][0]，prev1表示有股票dp[i][1]
+        int prev2 = 0, prev1 = -prices[0]; // 初始化dp[0][0] = 0, dp[0][1] = -prices[0]
         for (int i = 1; i < n; ++i) {
-            int newPrev2 = Math.max(prev2, prev1 + prices[i]);
-            int newPrev1 = Math.max(prev1, prev2 - prices[i]);
-            prev2 = newPrev2;
-            prev1 = newPrev1;
+            // dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i])
+            prev2 = Math.max(prev2, prev1 + prices[i]);
+            // dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])
+            prev1 = Math.max(prev1, prev2 - prices[i]);
         }
-        // 最后一天交易完后没有股票的最大利润
+        // 最后一天交易完后没有股票的最大利润 返回dp[n-1][0]
         return prev2;
-    }
-}
-
-// 贪心
-class Solution {
-    // 时间O(n) 空间O(1)
-    // 贪心： 找到x个不相交的区间(l,r] 最大化区间的收益
-    // 问题转换：求每个长度为1的区间的最大价值(所有相邻区间>0的值)
-    public int maxProfit(int[] prices) {
-        int ans = 0;
-
-        for (int i = 0; i < prices.length - 1; i++) {
-            ans += Math.max(0, prices[i + 1] - prices[i]);
-        }
-        return ans;
     }
 }

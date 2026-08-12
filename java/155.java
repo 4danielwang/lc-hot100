@@ -3,8 +3,8 @@
  */
 // 时间O(1) 空间O(n)
 class MinStack {
-    Deque<Integer> xStack;
-    Deque<Integer> minStack;
+    Deque<Integer> xStack; // 元素栈
+    Deque<Integer> minStack; // 最小值栈,栈顶元素为当前xStack栈顶元素对应的最小值
 
     public MinStack() {
         xStack = new LinkedList<Integer>();
@@ -18,6 +18,7 @@ class MinStack {
         minStack.push(Math.min(minStack.peek(), x));
     }
 
+    // 出栈时更新最小值栈
     public void pop() {
         xStack.pop();
         minStack.pop();

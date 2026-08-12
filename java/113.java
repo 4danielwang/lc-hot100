@@ -1,5 +1,3 @@
-import java.util.Deque;
-
 /**
  * @description: 根据二叉树root节点和targetSum,找到路经总和(根节点到叶子节点)等于targetSum的所有路径列表
  */
@@ -8,7 +6,7 @@ class Solution {
     private List<List<Integer>> ans = new ArrayList<>();
 
     // 记录当前路径
-    Deque<Integer> path = new LinkedList<Integer>();
+    List<Integer> path = new LinkedList<Integer>();
 
     // 时间O(n^2) 空间O(n)
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
@@ -21,7 +19,7 @@ class Solution {
             return;
         }
         // 访问当前root节点
-        path.offerLast(root.val);
+        path.add(root.val);
         // 访问后就更新targetSum
         targetSum -= root.val;
         // 叶子结点 并且targetSum=0 就是一个路径
@@ -30,6 +28,6 @@ class Solution {
         }
         dfs(root.left, targetSum);
         dfs(root.right, targetSum);
-        path.pollLast(); // 回溯
+        path.remove(path.size()-1); // 回溯
     }
 }

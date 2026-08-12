@@ -1,5 +1,5 @@
 /**
- * @description: 验证是否是一个有效的BST二叉搜索树
+ * @description: 验证是否是一个有效的BST二叉搜索树,BST定义：左子树所有节点值<根节点值<右子树所有节点值
  * 思路：递归判断或者中序遍历判断
  */
 class Solution {
@@ -13,6 +13,7 @@ class Solution {
         if (node == null) {
             return true;
         }
+        // 如果当前节点的值不在 (lower,upper) 范围内，则不是有效的BST
         if (node.val <= lower || node.val >= upper) {
             return false;
         }

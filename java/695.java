@@ -1,11 +1,13 @@
 /**
  * @description: m x n矩阵，计算相邻的1组成的岛屿的最大面积（1的数目）
+ * 思路：DFS计算所有的连通区域的面积和
+ * 
  */
 class Solution {
 
-    // 通过dfs 计算所有的连通区域的面积和
-    // grid[i][j] 0表示水面 1表示陆地 -1表示已经访问过该土地
+    // 时间O(m*n) 空间O(m*n)
     public int maxAreaOfIsland(int[][] grid) {
+        //  grid[i][j] 0表示水面 1表示陆地 -1表示已经访问过该土地
         int m = grid.length;
         int n = grid[0].length;
 
@@ -22,7 +24,7 @@ class Solution {
 
     }
 
-    // 找到从i,j起点的最大岛屿面积
+    // 找到从i,j起点的岛屿面积
     private int dfs(int i, int j, int[][] grid){
 
         // 越界 or 不是土地

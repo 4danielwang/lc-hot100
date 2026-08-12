@@ -16,6 +16,7 @@ class Solution extends SolBase {
             if(ans < 40){ // 只需要[0-39]的数
                 return (ans%10) + 1; // [1-10]
             }
+            // 剩下的就是拒绝采样
         }
 
     }

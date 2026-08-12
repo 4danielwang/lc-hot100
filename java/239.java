@@ -12,11 +12,11 @@ class Solution {
         Deque<Integer> deque = new ArrayDeque<>();
 
         for(int i=0;i<n;i++){
-            // 1. 入窗口：移除队尾的小于等于当前元素的下标
+            // 1. 入窗口：移除队尾的小于等于当前元素的下标 保证队列单调递减性
             while(!deque.isEmpty() && nums[deque.getLast()] <= nums[i]){
                 deque.removeLast();
             }
-            // 入队当前元素下表
+            // 入队当前元素下表l
             deque.addLast(i);
 
             // 2. 出窗口: 窗口大于k时，移除队首元素

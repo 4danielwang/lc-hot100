@@ -1,29 +1,14 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-
-/**
  * 判断是平衡二叉树
  */
-// 时间O(n) 空间O(n)
 class Solution {
-   public boolean isBalanced(TreeNode root) {
+    // 时间O(n) 空间O(n)
+    public boolean isBalanced(TreeNode root) {
         // 如果返回的高度不是 -1，说明是平衡的
         return height(root) >= 0;
     }
 
+    // 计算树的高度，如果不平衡返回 -1
     private int height(TreeNode root) {
         if (root == null) {
             return 0;
