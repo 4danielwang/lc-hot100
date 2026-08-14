@@ -1,8 +1,9 @@
 /**
  * @description: 判断一棵二叉树是否为完全二叉树。完全二叉树判断: 根编号v，左子树编号2v，右子树编号2v+1，最后一个节点的编号应该等于节点总数
- * BFS
+ * 思路：BFS，完全二叉树只有最后一层可能不满，且最后一层的节点都集中在左边
  */
 class Solution {
+    // 时间O(n) 空间O(n)
     public boolean isCompleteTree(TreeNode root) {
         // BFS层序遍历，给每个节点编号
         List<ANode> nodes = new ArrayList();

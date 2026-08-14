@@ -17,6 +17,14 @@ class Solution {
         if (length == 1) {
             return nums[0];
         }
+        // int []dp = new int[length];
+        // dp[0] = nums[0];
+        // dp[1] = Math.max(nums[0], nums[1]);
+        // for (int i = 2; i < length; i++) {
+        //     dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
+        // }
+        // return dp[length - 1];
+
         // 初始条件 dp[0] = nums[0], dp[1] = max(nums[0], nums[1])
         int prev2 = nums[0]; // prev2 相当于 dp[i-2]
         int prev1 = Math.max(nums[0], nums[1]); // prev1 相当于 dp[i-1]
@@ -27,6 +35,6 @@ class Solution {
             prev2 = prev1;
             prev1 = current;
         }
-        return prev1; // 返回dp[n-1]
+        return prev1; // 最后一个状态存放在prev1中 相当于dp[length-1]
     }
 }

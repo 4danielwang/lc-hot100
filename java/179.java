@@ -1,11 +1,10 @@
 /**
  * @description: 把nums数组排列,组成一个最大的数
  * [3,30,34,5,9] -> 9534330
- * 排序规则 [x,y]如果xy>yx 则x排在y前面
+ * 思路：需要把两个字符串组合起来 [x,y]如果xy>yx 则x排在y前面 看看xy大还是yx大
  */
 class Solution {
-    // 需要把两个字符串组合起来
-    // a,b 看看ab大还是ba大
+    // 时间O(nlognlogm) 空间O(logn) n是数组长度 m是32 位整数的最大值
     public String largestNumber(int[] nums) {
         // 把int[]转为String[]
         String[] numStrs = new String[nums.length];

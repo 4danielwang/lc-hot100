@@ -8,6 +8,8 @@ class Solution {
     // 时间O(n*m) 空间O(m)
     public int findLength(int[] A, int[] B) {
         int n = A.length, m = B.length;
+
+        // 需要n + 1行 m + 1列，最后一行和最后一列都是0,因为初始计算dp[n-1][m-1]时，需要用到dp[n][m]，所以需要多一行和一列
         // int[][] dp = new int[n + 1][m + 1];
         int[][] dp = new int[2][m + 1]; // 滚动数组
         int ans = 0; 

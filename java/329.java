@@ -7,6 +7,7 @@ class Solution {
     private int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     private int m, n;
 
+    // 时间O(mn) 空间O(mn)
     public int longestIncreasingPath(int[][] matrix) {
         if (matrix == null || matrix.length == 0) return 0;
         
