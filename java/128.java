@@ -14,7 +14,7 @@ class Solution {
 
         int ans = 0;
         for (Integer num : set) {
-            // 只对连续序列的“起点”进行匹配 num-1存在则是起点
+            // num-1不在set中,说明num是连续序列的起点,从num开始往后找连续的数字
             if (!set.contains(num - 1)) {
                 int longest = 1; // 当前序列长度
                 int currentNum = num; // 当前序列最大数字

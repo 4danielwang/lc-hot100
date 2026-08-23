@@ -8,7 +8,7 @@ class Solution {
 
         int n = nums.length;
         int[] ans = new int[n-k+1];
-        // 单调队列 队首是最大值下标
+        // 单调队列(递减) 队首是最大值下标
         Deque<Integer> deque = new ArrayDeque<>();
 
         for(int i=0;i<n;i++){
@@ -16,7 +16,7 @@ class Solution {
             while(!deque.isEmpty() && nums[deque.getLast()] <= nums[i]){
                 deque.removeLast();
             }
-            // 入队当前元素下表l
+            // 入队当前元素下标
             deque.addLast(i);
 
             // 2. 出窗口: 窗口大于k时，移除队首元素

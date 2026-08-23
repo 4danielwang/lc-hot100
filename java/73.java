@@ -1,7 +1,9 @@
+/**
+ * @description: 给定一个m*n的矩阵，如果一个元素为0，则将其所在行和列的所有元素都设为0，要求原地修改
+ * 思路：扫描matrix先标记再处理。用两个变量记录首行首列否有0。用matrix[0][j]和matrix[i][0]记录有0的行和列，把他们这一行/列的全部值变为0
+ */
 class Solution {
-    // 思路：扫描matrix 用两个数组 分别记录某一行 某一列是否有0
-    // 对有0的行和列 把他这一行/列的全部值变为0
-    // 空间复杂度从O(m+n)优化到O(1) 就是需要复用已有数组的某一行 用matix值为0表示该列有0
+    // 时间O(m*n) 空间O(1)
     public void setZeroes(int[][] matrix) {
        
         int m = matrix.length;

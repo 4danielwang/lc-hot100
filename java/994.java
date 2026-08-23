@@ -1,6 +1,12 @@
+/**
+ * @description: grid中0代表空格，1代表新鲜橘子，2代表烂橘子。每分钟，所有与腐烂橘子相邻的（4个方向）新鲜橘子都会腐烂，返回腐烂所有橘子所需的最小分钟数，如果不可能，返回-1
+ * 思路：BFS
+ */
 class Solution {
     // 存储四个方向的偏移量 当需要往四个方向走 直接用坐标+坐标偏移
     private static final int[][] OFFSET = {{-1,0},{1,0},{0,1},{0,-1}};
+
+    // 时间O(m*n) 空间O(m*n)
     public int orangesRotting(int[][] grid) {
         int fresh = 0; // 统计剩下的新鲜橘子个数
         Queue<int[]> pre = new LinkedList<>(); // 烂橘子队列 每个元素都保存的是烂橘子的坐标(i,j)

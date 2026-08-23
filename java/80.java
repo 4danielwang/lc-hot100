@@ -1,20 +1,17 @@
+/**
+ * @description: 删除有序数组中重复的元素，出现次数超过两次的元素只出现两次 ，返回删除后数组的新长度
+ * 思路：用一个栈记录去重后的元素，如果当前元素等于栈顶下方那个数（倒数第二个数），那么不能入栈（否则会有三个一样的数）
+ */
 class Solution {
     // 时间O(n) 空间O(1)
-    // 类似lc27
-    // stackSize记录栈大小 也是栈顶指针
-    // 用栈来记录去重后的元素，入栈条件是 nums[stackSize-2] != val
     public int removeDuplicates(int[] nums) {
-        if(nums.length <2){
-            return nums.length;
-        }
-        // 栈顶指针直接指向第三个元素 前两个直接入栈
         int stackSize = 2;
         for(int i=2;i<nums.length;i++){
+            // 不能存在三个连续相同的元素
             if(nums[i] != nums[stackSize -2]){
                 nums[stackSize++] = nums[i];
             }
         }
-        return stackSize;
-
+       return Math.min(stackSize, nums.length);
     }
 }

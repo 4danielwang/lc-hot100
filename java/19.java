@@ -21,24 +21,4 @@ class Solution {
         left.next = left.next.next; // 左指针的下一个节点就是倒数第 n 个节点
         return dummy.next;
     }
-
-        // 时间O(N) 空间O(1)
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        // 需要一个dummy 防止删除的是头节点
-        ListNode dummy = new ListNode(0, head);
-        // 快慢指针，快指针到达最后一个节点，慢指针到达要删除节点的上一个节点
-        ListNode slow = dummy;
-        ListNode fast = dummy;
-        for(int i=0;i<n;i++){
-            fast = fast.next;
-        }
-
-        // 找到倒数n的前一个节点 才能删除
-        while(fast.next!=null){
-            fast = fast.next;
-            slow = slow.next;
-        }
-        slow.next = slow.next.next;
-        return dummy.next;
-    }
 }

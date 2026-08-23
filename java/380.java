@@ -1,3 +1,6 @@
+/**
+ * @description: O(1) 时间插入、删除和获取随机元素
+ */
 class RandomizedSet {
 
     // value,index
@@ -24,6 +27,7 @@ class RandomizedSet {
         return true;
     }
     
+    // 删除先把要删除的元素和最后一个元素交换位置，然后删除最后一个元素，这样就可以O(1)时间删除
     public boolean remove(int val) {
         if(!map.containsKey(val)){
             return false;
@@ -42,11 +46,3 @@ class RandomizedSet {
         return list.get(random.nextInt(list.size()));
     }
 }
-
-/**
- * Your RandomizedSet object will be instantiated and called as such:
- * RandomizedSet obj = new RandomizedSet();
- * boolean param_1 = obj.insert(val);
- * boolean param_2 = obj.remove(val);
- * int param_3 = obj.getRandom();
- */

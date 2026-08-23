@@ -1,3 +1,7 @@
+/**
+ * @description: 向右旋转数组k个位置
+ * 思路：连续反转3次数组
+ */
 class Solution {
     // 时间O(n) 空间O(1)
     public void rotate(int[] nums, int k) {

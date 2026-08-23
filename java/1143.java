@@ -1,6 +1,7 @@
 /**
  * @description: 两个字符串text1和text2的最长公共子序列(不改变顺序的情况下选择某些字符组成的新的子串)长度
  * @example: 输入: text1 = "abcde", text2 = "ace" 输出: 3
+ * 思路：动态规划，dp[i][j]表示text1[0...i]和text2[0...j]的两个子串的LCS, dp[i][j] = dp[i-1][j-1] + 1 当dp[i-1] == dp[j-1], dp[i][j] = max(dp[i-1][j], dp[i][j-1]) 当dp[i-1] != dp[j-1]
  * 空间优化: 滚动数组 dp[i][j]只与dp[i-1][j]和dp[i][j-1]有关, 所以可以使用滚动数组(2行)优化空间复杂度
  */
 // 时间O(m*n) 空间O(n)
@@ -9,7 +10,6 @@ class Solution {
         int m=text1.length();
         int n=text2.length();
 
-        // dp[i][j]表示text1[0...i]和text2[0...j]的两个子串的LCS
         // dp[0][j]=dp[i][0]=0
         // int dp[][] = new int[m+1][n+1];
         int dp[][] = new int[2][n+1]; // 滚动数组

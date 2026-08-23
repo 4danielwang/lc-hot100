@@ -1,3 +1,6 @@
+/**
+ * @description: 初始位置在下标0，每个元素表示当前位置可以跳跃的最大长度，求到达最后一个下标(n-1)的最少跳跃次数
+ */
 class Solution {
     // 贪心
     // 时间O(n) 空间O(1)
@@ -9,9 +12,11 @@ class Solution {
         
         for(int i=0;i<n-1;i++){
             rightmost = Math.max(rightmost, i+nums[i]);
-            // 到达当前step范围边界了
+            // 到达当前step最远边界，更新下一步的最远边界
             if(i == end){
+                // 下一步的最远边界
                 end = rightmost;
+                // 最远步数+1
                 steps++;
             }
         }

@@ -1,4 +1,9 @@
+/**
+ * @description: 每行升序且下一行首元素大于上一行末元素的矩阵中查找 target。
+ * 思路：先找到<=target的行，再在该行二分查找target
+ */
 class Solution {
+    // 时间O(logmn) 空间O(1)
     public boolean searchMatrix(int[][] matrix, int target) {
         int rowIdx = searchFirstCol(matrix, target);
         if(rowIdx < 0){

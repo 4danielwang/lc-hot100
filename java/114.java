@@ -1,21 +1,11 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ * @description: 将二叉树展开为链表
+ * 思路：先序遍历二叉树，保存到一个线性表中, 然后遍历线性表，修改每个节点的左右指针
  */
 class Solution {
     
     private List<TreeNode> list = new ArrayList<>();
+    // 时间O(n) 空间O(n)
     public void flatten(TreeNode root) {
         // 先序遍历 保存线性表
         preOrder(root);

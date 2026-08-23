@@ -1,3 +1,7 @@
+/**
+ * @description: 找到只出现一次的数字
+ * 思路：用map统计每个元素出现的次数，最后找到出现次数为1的元素
+ */
 class Solution {
     public int singleNumber(int[] nums) {
         Map<Integer, Integer> mapCount = new HashMap<>();

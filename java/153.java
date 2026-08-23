@@ -1,20 +1,24 @@
+/**
+ * @description: 在元素互不相同的旋转排序数组中寻找最小值
+ * 思路：二分查找，旋转后分为两个有序段。
+ * @example: [3,4,5,1,2] 旋转点是1，最小值是1
+ * @example: [4,5,6,7,0,1,2] 旋转点是0，最小值是0
+ */
 class Solution {
+    // 时间O(logn) 空间O(1)
     public int findMin(int[] nums) {
+        // 闭区间二分查找
         int left=0;
         int right=nums.length-1;
 
-        // 最后的退出情况就是left=right
+        // 退出时 left=right
         while(left<right){
             int mid = left+(right-left)/2;
             
-            // 分两种情况 一个有序段 两个有序段
-            // [1,2,3,4,5]
-            // [3,4,5,1,2]
-            //  情况1 两个有序段 mid在第一个段内
+            // 最小值一定在右边段，缩小0~mid的范围，搜索mid+1~right
             if(nums[mid] > nums[right])
                 left=mid+1;
-            // 情况2 要么mid在第二个有序段 要么nums整体只有一个有序段
-            // 包含了>=等于的情况 right不是更新为 mid+1而是mid
+            // 最小值一定在左边段（包括也可能是mid），缩小mid~right的范围，搜索left~mid
             else
                 right=mid;
         }

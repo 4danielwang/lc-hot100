@@ -7,12 +7,12 @@
 // 时间O(n) 空间O(n)
 class Solution {
     // pre[j] - pre[i-1] == k => pre[i-1] == pre[j] - k
-    // 判断有没有前缀和为 pre[j] - k 的情况，出现的次数就是有多少个子数组的和为 k
+    // 判断有没有**前缀和**等于pre[j] - k ，出现的次数就是有多少个子数组的和为 k
     public int subarraySum(int[] nums, int k) {
         int ans=0;
         int pre=0; // 当前位置前缀和
         
-        // key pre[j] - k的值，value是这个值出现的次数
+        // key是前缀和pre，value是这个值出现的次数
         Map<Integer,Integer> preToCount = new HashMap<>();
         // 根据定义 prefix[0]=0 一定有一个为0的前缀和 注意不要遗漏
         preToCount.put(0,1);

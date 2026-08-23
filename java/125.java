@@ -1,3 +1,7 @@
+/**
+ * @description: 判断一个字符串是否是回文串，只考虑字母和数字字符，忽略大小写
+ * 思路：双指针，左指针从左往右扫描，右指针从右往左扫描，遇到非字母数字的字符就跳过，直到两个指针相遇
+ */
 class Solution {
     // 双指针 时间O(n) 空间O(1)
     public boolean isPalindrome(String s) {

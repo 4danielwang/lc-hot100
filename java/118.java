@@ -1,3 +1,7 @@
+/**
+ * @description: 生成杨辉三角
+ * 杨辉三角：每一行的第一个和最后一个元素都是1，中间的元素是上一行的相邻两个元素之和
+ */
 class Solution {
     public List<List<Integer>> generate(int numRows) {
 

@@ -1,23 +1,11 @@
-/*
-// Definition for a Node.
-class Node {
-    int val;
-    Node next;
-    Node random;
-
-    public Node(int val) {
-        this.val = val;
-        this.next = null;
-        this.random = null;
-    }
-}
-*/
-
+/**
+ * @description: 深拷贝带随机指针的链表
+ * 思路：先拷贝val 建立了顺序表后 再来建立random关系
+ */
 class Solution {
-    
-    // 顺序表实现o1查询
-    // 先拷贝val 建立了顺序表后 再来建立random关系
+    // 时间O(n) 空间O(n)
     public Node copyRandomList(Node head) {
+        // 顺序表实现o1查询
         List<Node> list = new ArrayList<>();
         List<Node> list2 = new ArrayList<>(); // 新的链表节点顺序表
         Node dummy = new Node(0);

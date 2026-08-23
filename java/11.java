@@ -1,5 +1,9 @@
-import java.util.*;
+/**
+ * @description: 找到数组中两条线与x轴形成的容器，能够容纳最多的水，求最大的
+ * 思路：双指针
+ */
 class Solution {
+    // 时间O(n) 空间O(1)
     public int maxArea(int[] height) {
         // 双指针 i和j中间的范围代表搜索空间，也就是没有被扫描的范围
         // 最低的指针确定水面高度

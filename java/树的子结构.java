@@ -18,7 +18,7 @@ class Solution {
                 isSubStructure(tree1.right, tree2);
     }
 
-    // 同时往下遍历 tree1 和 tree2，看看接下来的结构和值是否完全一致
+    // tree2是不是以tree1为相同根的子结构
     private boolean dfs(TreeNode node1, TreeNode node2) {
         // node2 走到了尽头，说明前面的节点都匹配成功了
         if (node2 == null)

@@ -1,3 +1,7 @@
+/**
+ * @description: 寻找重复数
+ * 思路：哈希表计数
+ */
 class Solution {
     public int findDuplicate(int[] nums) {
         Map<Integer,Integer> mapCount = new HashMap<>();

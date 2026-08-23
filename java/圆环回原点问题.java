@@ -35,6 +35,6 @@ class Solution {
         }
         
         // 返回走 n 步最终在 0 点的方案数
-        return dp[n][0];
+        return dp[n%2][0];
     }
 }

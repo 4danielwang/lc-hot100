@@ -1,10 +1,14 @@
+/**
+ * @description: 仅包含2-9数字的字符串，返回所有可能的字母组合(数字到字母映射和电话按键相同)
+ * 思路：DFS+回溯
+ * 
+ */
 class Solution {
     // MAPPING[i] 就是数字为i的按钮的字母
     private static final String[] MAPPING = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
     private List<String> ans = new ArrayList<>();
 
-    // 时间O(n*4^n)
-    // 空间O(n)
+    // 时间O(n*4^n) 空间O(n)
     public List<String> letterCombinations(String digits) {
         // 路径长度
         int n = digits.length();

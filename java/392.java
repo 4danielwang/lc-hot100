@@ -1,3 +1,7 @@
+/**
+ * @description: 判断子序列
+ * 思路：双指针
+ */
 class Solution {
     // 双指针 时间O(n) 空间O(1)
     public boolean isSubsequence(String s, String t) {
