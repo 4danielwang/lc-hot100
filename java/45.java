@@ -8,7 +8,7 @@ class Solution {
         int steps = 0;
         int n = nums.length;
         int rightmost = 0; // 最远能跳的位置
-        int end = 0; // 当前step的最远边界
+        int end = 0; // 下一步能到的最远边界
         
         for(int i=0;i<n-1;i++){
             rightmost = Math.max(rightmost, i+nums[i]);

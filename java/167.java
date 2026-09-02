@@ -1,5 +1,5 @@
 /**
- * @description: 有序数组两数之和
+ * @description: 有序数组两数之和，返回两个数的序号，数组从1开始计数
  * 思路：相向双指针，前提是有序数组
  */
 class Solution {
@@ -14,11 +14,9 @@ class Solution {
             } else if (numbers[left] + numbers[right] < target) {
                 // left-right中间所有数字相加都小了，往大了缩减
                 left++;
-            } else if (numbers[left] + numbers[right] > target) {
+            } else {
                 // left-right中间所有数字相加都大了，往小了缩减
                 right--;
-            } else {
-                left++;
             }
         }
         return new int[] {-1, -1};

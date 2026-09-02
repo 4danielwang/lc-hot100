@@ -15,38 +15,66 @@ class Solution {
 
         // int[][] dp = new int[rows][cols];
 
-        // for(int i=0;i<rows;i++){
-        //     for(int j=0;j<cols;j++){
-        //         if(matrix[i][j] == '1'){
-        //             // i==0或者j=0的边界上 要么是0要么是1
-        //             if(i==0 || j==0){
-        //                 dp[i][j] = 1;
-        //             }else{
-        //                 // 取决于左边、左上、上边的三个位置, 如果三个都是1，边长是2，否则有一个是0，边长是1
-        //                 dp[i][j] = Math.min(Math.min(dp[i-1][j-1], dp[i][j-1]), dp[i-1][j]) + 1;
-        //             }
-        //             ans = Math.max(dp[i][j], ans);
+        // 初始化第一行
+        // for (int j = 0; j < cols; j++) {
+        //     if (matrix[0][j] == '1') {
+        //         dp[0][j] = 1;
+        //         ans = 1; // 只要第一行有1，最大面积至少为1
+        //     }
+        // }
+
+        // 单独初始化第一列
+        // for (int i = 0; i < rows; i++) {
+        //     if (matrix[i][0] == '1') {
+        //         dp[i][0] = 1;
+        //         ans = 1; // 只要第一行有1，最大面积至少为1
+        //     }
+        // }
+
+
+        // for (int i = 1; i < rows; i++) {
+        //     for (int j = 1; j < cols; j++) {
+        //         if (matrix[i][j] == '1') {
+        //             // 取决于左边、左上、上边的三个位置的最短边长 + 1
+        //             dp[i][j] = Math.min(Math.min(dp[i-1][j-1], dp[i][j-1]), dp[i-1][j]) + 1;
+                    
+        //             // 更新最大边长记录
+        //             ans = Math.max(ans, dp[i][j]);
         //         }
-        //     }       
+        //     }
         // }
         // return ans * ans;
 
         int[][] dp = new int[2][cols]; // 只保存当前行和上一行
 
-        for(int i=0;i<rows;i++){
+        // 初始化第一行
+        for (int j = 0; j < cols; j++) {
+            if (matrix[0][j] == '1') {
+                dp[0][j] = 1;
+                ans = 1;
+            }
+        }
+        
+        // 滚动数组优化
+        for (int i = 1; i < rows; i++) {
             int curr = i % 2; // 当前行
-            int prev = (i + 1) % 2; // 上一行
+            int prev = (i - 1) % 2; // 上一行
            
-            for(int j=0;j<cols;j++){
-                if(matrix[i][j] == '1'){
-                    if(i==0 || j==0){
-                        dp[curr][j] = 1;
-                    }else{
-                        dp[curr][j] = Math.min(Math.min(dp[prev][j-1], dp[curr][j-1]), dp[prev][j]) + 1;
-                    }
-                    ans = Math.max(dp[curr][j], ans);
-                }else{
-                    dp[curr][j] = 0; // 这里必须清零 因为是滚动数组
+            // 注意：滚动数组不要忘记初始化第一列
+            if (matrix[i][0] == '1') {
+                dp[curr][0] = 1;
+                ans = Math.max(ans, 1);
+            } else {
+                dp[curr][0] = 0;
+            }
+            
+            for (int j = 1; j < cols; j++) {
+                if (matrix[i][j] == '1') {
+                    // 取决于左边、左上、上边
+                    dp[curr][j] = Math.min(Math.min(dp[prev][j-1], dp[curr][j-1]), dp[prev][j]) + 1;
+                    ans = Math.max(ans, dp[curr][j]);
+                } else {
+                    dp[curr][j] = 0; // 注意：滚动数组必须清零
                 }
             }
         }

@@ -24,7 +24,7 @@ class Solution {
                 deque.removeFirst();
             }
 
-            // 3. 首次到达窗口大小k时 开始记录窗口最大值下标
+            // 3. 只要窗口大小到k时 开始记录最大值下标
             if(i >= k-1){
                 ans[i-k+1] = nums[deque.getFirst()];
             }

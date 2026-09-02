@@ -14,31 +14,32 @@ class Solution {
             n++;
         }
 
-        // 约定：前半部分链表长度更长
-        // 找到前半个链表的最后一个节点 n/2向上取整 = (n+1)/2
-        ListNode last=head;
-        for(int i=1;i<(n+1)/2;i++){
-            last = last.next;
-        }
-
-        // 翻转后半段链表 拼接到一起
-        last.next = reverse(last.next);
-
-        ListNode slow=head; // 前半部分链表
-        ListNode fast=last.next; // 后半部分链表
-
-        // 比较链表节点 后链表更短 作为结束条件
-        // 用变量保存结果 因为需要把链表翻转回去 不复原可以直接return
-        boolean result=true;
-        while(result && fast!=null){
-            if(slow.val != fast.val){
-                result=false;
-            }
+        // 双指针分割链表为l1和l2，l1链表长度>=l2长度
+        ListNode slow = head; 
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
-            fast = fast.next;
+            fast = fast.next.next;
         }
+        // slow最后指向l1的最后一个节点
+        // 翻转后半段链表 拼接到一起
+        slow.next = reverse(slow.next);
+
+        // 比较前后两半部分是否回文
+        ListNode p1 = head; // 前半部分指针
+        ListNode p2 = slow.next; // 后半部分指针
+
+        boolean result=true;
+        while (result && p2 != null) {
+            if (p1.val != p2.val) {
+                result = false;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+       
         // 翻转后半段链表
-        last.next = reverse(last.next);
+        slow.next = reverse(slow.next);
         return result;
     }
 

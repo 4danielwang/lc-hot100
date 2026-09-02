@@ -17,7 +17,7 @@ class Solution {
         // 如果没找到直接翻转 翻转[i+1,n)
         if(i>=0){
             int j=nums.length-1;
-            // 在区间[i+1, n)找第一个大于等于nums[i]的元素
+            // 在区间[i+1, n)找第一个nums[j]> nums[i]的元素
             while(j>=i && nums[j]<= nums[i]){
                 j--;
             }

@@ -1,6 +1,6 @@
 /**
  * @description: 无重复字符的最长子串: 给定一个字符串s找出其中不含有重复字符的最长子串(子串是连续的,子序列是不连续的)的长度
- * @example: abcabcbb -> 3
+ * @example: abcabcbb -> 3im
  * @example: bbbbb -> 1
  * @example: pwwkew -> 3
  * 思路: 滑动窗口,哈希表记录当前窗口每个字符出现次数

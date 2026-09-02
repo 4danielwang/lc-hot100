@@ -1,7 +1,7 @@
 /**
  * @description: 把nums数组排列,组成一个最大的数
  * [3,30,34,5,9] -> 9534330
- * 思路：需要把两个字符串组合起来 [x,y]如果xy>yx 则x排在y前面 看看xy大还是yx大
+ * 思路：需要把两个字符串组合起来 [x,y]如果xy>yx 则x排在y前面 看看xy大还是yx大（按照x+y的字典序降序排列）
  */
 class Solution {
     // 时间O(nlognlogm) 空间O(logn) n是数组长度 m是32 位整数的最大值

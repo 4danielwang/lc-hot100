@@ -6,15 +6,14 @@ class Solution {
     private List<Integer> ans = new ArrayList<>();
     public int kthSmallest(TreeNode root, int k) {
         // 中序遍历就是从小到大
-        inOrder(root, k);
+        inOrder(root);
         return ans.get(k-1);
-
     }
 
-    private void inOrder(TreeNode root, int k){
+    private void inOrder(TreeNode root){
         if(root == null) return;
-        inOrder(root.left, k);
+        inOrder(root.left);
         ans.add(root.val);
-        inOrder(root.right, k);
+        inOrder(root.right);
     }
 }
