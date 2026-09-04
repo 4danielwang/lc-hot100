@@ -13,7 +13,7 @@ class Solution {
 
         // 循环直到k=0
         while (k > 0) {
-            // 当前子数节点总数
+            // 当前子树节点总数
             int steps = getSteps(curr, n);
             // 节点不在以 curr 为根的子树中（这个子树小于n的节点个数不足k个），剪枝（跳过）
             if (steps <= k) {

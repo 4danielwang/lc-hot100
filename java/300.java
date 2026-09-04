@@ -7,9 +7,10 @@ class Solution {
     // 时间O(nlogn) 空间O(1)
     public int lengthOfLIS(int[] nums) {
         // int[] tails = new int[nums.length];
-        int res = 0; // LIS的长度
+        int res = 0; // LIS的长度 & tails数组的长度
         for (int x : nums) {
-            // 二分查找找到第一个>=x的位置
+            // 二分查找tails数组找到第一个>=x的位置
+            // 说明 x 不能让子序列变得更长，优化子序列把那个原本比较大的结尾元素替换成 x
             int j = lowerBound(nums, res, x);
             // 贪心：直接用当前更小的，替换掉原来更大的那个元素
             nums[j] = x;

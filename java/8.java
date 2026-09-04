@@ -9,7 +9,7 @@ class Solution {
         // 正则表达式 筛选到数字的部分
         // 正则表达式的特殊字符需要转义
         Pattern pattern = Pattern.compile("^\\s*([+-]?\\d+).*");
-        // "-123"=>123
+        // "-123"=>-123
         Matcher matcher = pattern.matcher(s);
 
         if(matcher.find()){

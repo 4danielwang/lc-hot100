@@ -14,18 +14,20 @@ class Solution {
             int[][] f = new int[2][amount + 1];
             Arrays.fill(f[0], Integer.MAX_VALUE / 2); // 除 2 防止后面 + 1 溢出Integer
             
-            f[0][0] = 0; // 初始条件
-            // (i+1)%2表示当前行, i%2表示上一行
-            for (int i = 0; i < n; i++) {
+            f[0][0] = 0; // 初始条件：0个硬币凑成金额0所需个数为0
+            // i从1开始 coins需要i-1索引
+            for (int i = 1; i <= n; i++) {
+                int curr = i % 2;           // 当前行
+                int prev = (i - 1) % 2;     // 上一行
                 for (int c = 0; c <= amount; c++) {
                     // 硬币比当前金额大,不能选择该硬币,只能继承上一个状态
-                    if (c < coins[i]) {
+                    if (c < coins[i - 1]) {
                         // f[i][c] = f[i - 1][c];
-                        f[(i + 1) % 2][c] = f[i % 2][c];
+                        f[curr][c] = f[prev][c];
                     } else {
                         // 选择该硬币和不选择该硬币,取最小值
                         // f[i][c] = Math.min(f[i - 1][c], f[i][c - coins[i]] + 1);
-                        f[(i + 1) % 2][c] = Math.min(f[i % 2][c], f[(i + 1) % 2][c - coins[i]] + 1);
+                        f[curr][c] = Math.min(f[prev][c], f[curr][c - coins[i-1]] + 1);
                     }
                 }
             }

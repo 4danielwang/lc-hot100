@@ -19,4 +19,4 @@ class NumArray {
         // 前right+1个数的和-前left个数的和
         return s[right+1]-s[left];
     }
-}W
+}
